@@ -41,3 +41,55 @@ function formatLinks($linksText) {
     return $output;
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><?= htmlspecialchars($week['title']) ?></title>
+</head>
+<body>
+    <h1><?= htmlspecialchars($week['title']) ?></h1>
+
+    <h3>Description</h3>
+    <p><?= nl2br(htmlspecialchars($week['description'])) ?></p>
+
+    <?php if (!empty($week['notes'])): ?>
+        <h3>Notes</h3>
+        <p><?= nl2br(htmlspecialchars($week['notes'])) ?></p>
+    <?php endif; ?>
+
+    <?php if (!empty($week['links'])): ?>
+        <h3>Links</h3>
+        <?= formatLinks($week['links']); ?>
+    <?php endif; ?>
+
+    <hr>
+
+    <h2>Discussion</h2>
+
+    <!-- NOTE: Any logged-in user (student or teacher) can post a comment here -->
+    <form action="week_comment_add.php" method="post">
+        <input type="hidden" name="week_id" value="<?= $id ?>">
+        <textarea name="comment" rows="3" cols="60" required></textarea><br>
+        <button type="submit">Post Comment</button>
+    </form>
+
+    <ul>
+        <?php foreach ($comments as $c): ?>
+            <li>
+                <strong><?= htmlspecialchars($c['name']) ?></strong>
+                (<?= $c['created_at'] ?>):<br>
+                <?= nl2br(htmlspecialchars($c['comment'])) ?><br>
+
+                <?php if (canModify($c['user_id'])): ?>
+                    <!-- NOTE: The owner of the comment or the admin can delete it -->
+                    <a href="week_comment_delete.php?id=<?= $c['id'] ?>&week=<?= $id ?>">Delete</a>
+                <?php endif; ?>
+            </li>
+            <hr>
+        <?php endforeach; ?>
+    </ul>
+
+    <p><a href="weeks.php">Back to Weekly Breakdown</a></p>
+</body>
+</html>
