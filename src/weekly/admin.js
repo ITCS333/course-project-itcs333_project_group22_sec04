@@ -17,8 +17,10 @@ let weeks = [];
 
 // --- Element Selections ---
 // TODO: Select the week form ('#week-form').
+const weekForm = document.getElementById("week-form");
 
 // TODO: Select the weeks table body ('#weeks-tbody').
+const weeksTableBody = document.getElementById("weeks-tbody");
 
 // --- Functions ---
 
@@ -33,7 +35,37 @@ let weeks = [];
  * - A "Delete" button with class "delete-btn" and `data-id="${id}"`.
  */
 function createWeekRow(week) {
-  // ... your implementation here ...
+  const tr = document.createElement("tr");
+
+  // Create title cell
+  const titleTd = document.createElement("td");
+  titleTd.textContent = week.title;
+
+  // Create description cell
+  const descTd = document.createElement("td");
+  descTd.textContent = week.description;
+
+  // Create actions cell
+  const actionsTd = document.createElement("td");
+
+  const editBtn = document.createElement("button");
+  editBtn.textContent = "Edit";
+  editBtn.classList.add("edit-btn");
+  editBtn.setAttribute("data-id", week.id);
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "Delete";
+  deleteBtn.classList.add("delete-btn");
+   deleteBtn.setAttribute("data-id", week.id);
+
+    actionsTd.appendChild(editBtn);
+    actionsTd.appendChild(deleteBtn);
+
+    tr.appendChild(titleTd);
+    tr.appendChild(descTd);
+    tr.appendChild(actionsTd);
+    
+    return tr;
 }
 
 /**
