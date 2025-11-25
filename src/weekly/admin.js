@@ -77,7 +77,12 @@ function createWeekRow(week) {
  * append the resulting <tr> to `weeksTableBody`.
  */
 function renderTable() {
-  // ... your implementation here ...
+  weeksTableBody.innerHTML = "";
+
+  weeks.forEach(week => {
+    const row = createWeekRow(week);
+    weeksTableBody.appendChild(row);
+    });
 }
 
 /**
@@ -94,7 +99,33 @@ function renderTable() {
  * 7. Reset the form.
  */
 function handleAddWeek(event) {
-  // ... your implementation here ...
+  // 1. Prevent the form's default submission
+  event.preventDefault();
+
+   // 2. Get values from inputs
+   const title = document.getElementById("week-title").value.trim();
+   const startDate = document.getElementById("week-start-date").value.trim();
+   const description = document.getElementById("week-description").value.trim();
+
+   // 3. Get links and split by newlines
+   const linksRaw = document.getElementById("week-links").value.trim();
+   const links = linksRaw ? linksRaw.split("\n").map(link => link.trim()).filter(link => link) : [];
+
+   // 4. Create new week object with unique ID
+   const newWeek = {
+     id: `week_${Date.now()}`,
+     title,
+     startDate,
+     description,
+     links
+   };
+   // 5. Add to global weeks array
+  weeks.push(newWeek);
+
+   renderTable();
+
+   event.target.reset();
+
 }
 
 /**
