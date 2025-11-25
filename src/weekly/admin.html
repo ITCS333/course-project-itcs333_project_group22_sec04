@@ -9,7 +9,7 @@
 <html lang="en">
 <head>
     <!-- TODO: Add the 'meta' tag for character encoding (UTF-8). -->
-     <meta charset="utf-8">
+     <meta charset="UTF-8">
     
     <!-- TODO: Add the responsive 'viewport' meta tag. -->
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,9 +93,9 @@
 <table id="weeks-table">
 <thead>
 <tr>
- <th>Week Title</th>
- <th>Description</th>
- <th>Actions</th>
+ <th scope="col">Week Title</th>
+ <th scope="col">Description</th>
+ <th scope="col">Actions</th>
 </tr>
 </thead>
                 <!-- TODO: Create a 'tbody' for the data. -->
@@ -108,8 +108,6 @@
                 <td>Week 1: Intro to HTML</td>
                 <td>Covers basic HTML structure, essential tags (h1-h6, p, a, img), and attributes.</td>
                 <td>
-            
-                </td>  
                         <!-- TODO: Add a 'td' containing the action buttons. -->
                             <!-- TODO: Add an "Edit" button. -->
                              <button class="edit-btn" data-week-id="1">Edit</button>
