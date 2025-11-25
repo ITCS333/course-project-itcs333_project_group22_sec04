@@ -24,8 +24,13 @@ let currentComments = [];
 
 // --- Element Selections ---
 // TODO: Select all the elements you added IDs for in step 2.
-
-// --- Functions ---
+const weekTitle = document.getElementById("week-title");
+const weekStartDate = document.getElementById("week-start-date");
+const weekDescription = document.getElementById("week-description");
+const weekLinksList = document.getElementById("week-links-list");
+const commentList = document.getElementById("comment-list");
+const commentForm = document.getElementById("comment-form");
+const newCommentText = document.getElementById("new-comment-text");
 
 /**
  * TODO: Implement the getWeekIdFromURL function.
@@ -35,7 +40,10 @@ let currentComments = [];
  * 3. Return the id.
  */
 function getWeekIdFromURL() {
-  // ... your implementation here ...
+  const queryString = window.location.search;
+  const params = new URLSearchParams(queryString);
+  const id = params.get("id");
+  return id;
 }
 
 /**
