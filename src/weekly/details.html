@@ -52,33 +52,51 @@
         <!-- Section 2: Discussion Forum -->
         <!-- TODO: Create a 'section' for the discussion, with an 'id' of "discussion-forum". -->
             <!-- TODO: Add a sub-heading ('h2') "Discussion". -->
-
+<section id="discussion-forum">
+    <h2>Discussion</h2>
             <!-- Subsection 2.1: Existing Comments -->
             <!-- TODO: Add a container (like a 'div') for the list of comments. -->
                 <!-- TODO: Add 1-2 dummy comments to show the structure. -->
-
+                 <h3>Existing Comments</h3>
+                 <div id="comments-list">
+                 <article class="comment">
                 <!-- Example Comment 1: -->
                 <!-- TODO: Use an 'article' for each comment. -->
                     <!-- TODO: Use a 'p' for the comment text (e.g., "I have a question about the 'header' tag."). -->
+                    <p>I have a question about the 'head' element.</p>
                     <!-- TODO: Use a 'footer' to show the author (e.g., "Posted by: John Doe"). -->
+                     <footer>Posted by: **John Doe (Student)** on 2025-09-03</footer>
                 <!-- End of comment article. -->
-
+                     </article>
             <!-- Subsection 2.2: Add a Comment Form -->
+             <article class="comment teacher-reply">
+                <p>The order is generally not critical, but placing the `<meta charset>` tag first is highly recommended. It ensures the browser reads the encoding correctly before processing other content.</p>
+                <footer>
+                    Posted by: **Jane Smith (Instructor)** on 2025-09-04
+                </footer>
+                </article>
+                </div>
             <!-- TODO: Create a 'form' for users to post new comments. Action can be '#'. -->
                 <!-- TODO: Use a 'fieldset' to group the controls. -->
                     <!-- TODO: Add a 'legend', e.g., "Ask a Question". -->
-
-                    <!-- TODO: Add a 'label' and 'textarea' for the comment box.
-                         - label 'for': "new-comment"
-                         - textarea 'id': "new-comment", required -->
-                    
-                    <!-- TODO: Add a 'button' to submit the comment.
-                         - type="submit", Text: "Post Comment" -->
-                <!-- End of fieldset. -->
-            <!-- End of form. -->
-        <!-- End of discussion section. -->
-
+              <h3>Ask a Question</h3>
+              <form id="new-comment-form" action="#" method="post">
+                <fieldset>
+                    <div>
+                        <label for="new-comment">Your Comment or Question:</label>
+                        <textarea id="new-comment" name="comment-text" rows="4"required></textarea>
+                    </div>
+                    <div>
+                        <button type=""submit">Post Comment</button>
+                    </div>
+                    <!-- End of fieldset. -->
+                </fieldset>
+                <!-- End of form. -->
+              </form>
+            <!-- End of discussion section. -->
+              </section>
     <!-- End of main. -->
+            </main>
 </body>
 </html>
 
