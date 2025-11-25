@@ -105,8 +105,13 @@ function createCommentArticle(comment) {
  * append the resulting <article> to `commentList`.
  */
 function renderComments() {
-  // ... your implementation here ...
-}
+  commentList.innerHTML = "";
+  // Loop through currentComments
+  currentComments.forEach((comment) => {
+    const article = createCommentArticle(comment);
+    commentList.appendChild(article);
+    });
+  }
 
 /**
  * TODO: Implement the handleAddComment function.
@@ -122,8 +127,20 @@ function renderComments() {
  * 7. Clear the `newCommentText` textarea.
  */
 function handleAddComment(event) {
-  // ... your implementation here ...
-}
+  event.preventDefault(); // Step 1
+
+  const commentText = newCommentText.value.trim(); // Step 2
+  if (commentText === "") return; // Step 3
+
+  const newComment = {
+    author: "Student", // Step 4
+    text: commentText,
+    };
+     currentComments.push(newComment); // Step 5
+     renderComments(); // Step 6
+     newCommentText.value = ""; // Step 7
+  }
+
 
 /**
  * TODO: Implement an `initializePage` function.
@@ -143,7 +160,42 @@ function handleAddComment(event) {
  * 8. If the week is not found, display an error in `weekTitle`.
  */
 async function initializePage() {
-  // ... your implementation here ...
+  currentWeekId = getWeekIdFromURL();
+
+  if (!currentWeekId) {
+    weekTitle.textContent = "Week not found.";
+    return;
+  }
+  try {
+    // Step 3
+     const [weeksRes, commentsRes] = await Promise.all([
+      fetch("weeks.json"),
+      fetch("week-comments.json"),
+      ]);
+
+      // Step 4
+      const weeksData = await weeksRes.json();
+       const commentsData = await commentsRes.json();
+
+       // Step 5
+       const week = weeksData.find((w) => w.id === currentWeekId);
+
+       // Step 6
+        currentComments = commentsData[currentWeekId] || [];
+
+        // Step 7
+        if (week) {
+          renderWeekDetails(week);
+          renderComments();
+          commentForm.addEventListener("submit", handleAddComment);
+          } else {
+            // Step 8
+            weekTitle.textContent = "Week not found.";
+             }
+             } catch (error) {
+              weekTitle.textContent = "Error loading week data.";
+              console.error("Initialization error:", error);
+  }
 }
 
 // --- Initial Page Load ---
