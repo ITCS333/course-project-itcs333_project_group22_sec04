@@ -29,7 +29,7 @@
     <!-- TODO: Create the 'main' content area. -->
 <main>
     <section>
-        <h2>Add a New Week</h2>
+        <h2>➕Add a New Week</h2>
 <form id="week-form" action="#" method="post">
             <fieldset>
                 <legend>Weekly Details</legend>
@@ -85,26 +85,55 @@
         <!-- Section 2: Existing Weekly Entries -->
         <!-- TODO: Create a 'section' to display the list of current weeks. -->
             <!-- TODO: Add a sub-heading ('h2') "Current Weekly Breakdown". -->
-
+<section>
+    <h2>📚Current Weekly Breakdown</h2>
             <!-- TODO: Create a 'table' with id "weeks-table". -->
                 <!-- TODO: Create a 'thead' and a 'tr' inside it. -->
                     <!-- TODO: Add 'th' elements for "Week Title", "Description", and "Actions". -->
-                
+<table id="weeks-table">
+<thead>
+<tr>
+ <th>Week Title</th>
+ <th>Description</th>
+ <th>Actions</th>
+</tr>
+</thead>
                 <!-- TODO: Create a 'tbody' for the data. -->
+                 <tbody>
                     <!-- TODO: Add 1-2 rows of dummy data to see the structure. -->
                     <!-- Example Row 1: -->
                     <!-- TODO: Create a 'tr' for the first week. -->
                         <!-- TODO: Add 'td' cells for a title (e.g., "Week 1: Intro to HTML") and a short description. -->
-                        
+                      <tr>
+                <td>Week 1: Intro to HTML</td>
+                <td>Covers basic HTML structure, essential tags (h1-h6, p, a, img), and attributes.</td>
+                <td>
+            
+                </td>  
                         <!-- TODO: Add a 'td' containing the action buttons. -->
                             <!-- TODO: Add an "Edit" button. -->
+                             <button class="edit-btn" data-week-id="1">Edit</button>
                             <!-- TODO: Add a "Delete" button. -->
+                             <button class="delete-btn" data-week-id="1">Delete</button>
                         <!-- End of actions 'td'. -->
+                         </td>
                     <!-- End of the row. -->
+                     </tr>
+                    <tr>
+                        <td>Week 2: CSS Fundamentals</td>
+                        <td>Deep dive into selectors, properties, the Box Model, and basic layout techniques.</td>
+                        <td>
+                            <button class="edit-btn" data-week-id="2">Edit</button>
+                            <button class="delete-btn" data-week-id="2">Delete</button>
+                        </td>
+                    </tr>
 
                 <!-- End of tbody. -->
+                 </tbody>
             <!-- End of table. -->
+             </table>
         <!-- End of list section. -->
+         </section>
 
     <!-- End of main. -->
 </body>
