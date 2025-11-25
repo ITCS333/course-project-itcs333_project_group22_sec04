@@ -139,7 +139,12 @@ function handleAddWeek(event) {
  * 4. Call `renderTable()` to refresh the list.
  */
 function handleTableClick(event) {
-  // ... your implementation here ...
+  if (event.target.classList.contains("delete-btn")) {
+    const idToDelete = event.target.getAttribute("data-id");
+    //Filter out the matching week from the global weeks array
+    weeks = weeks.filter(week => week.id !== idToDelete);
+    renderTable();
+  }
 }
 
 /**
@@ -153,9 +158,27 @@ function handleTableClick(event) {
  * 5. Add the 'click' event listener to `weeksTableBody` (calls `handleTableClick`).
  */
 async function loadAndInitialize() {
-  // ... your implementation here ...
+  try {
+    //  Fetch data from 'weeks.json'
+    const response = await fetch("weeks.json");
+    // Parse the JSON and store in global weeks array
+    const data = await response.json();
+    weeks = data;
+
+    // Render the table with initial data
+    renderTable();
+
+    weekForm.addEventListener("submit", handleAddWeek);
+    //  Add click event listener to the table body
+    weeksTableBody.addEventListener("click", handleTableClick);
+  } catch (error) {
+    console.error("Failed to load weeks.json:", error);
+  }
 }
 
 // --- Initial Page Load ---
 // Call the main async function to start the application.
 loadAndInitialize();
+
+
+
