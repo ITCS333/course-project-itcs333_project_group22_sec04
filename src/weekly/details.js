@@ -58,7 +58,19 @@ function getWeekIdFromURL() {
  * should both be the link URL.
  */
 function renderWeekDetails(week) {
-  // ... your implementation here ...
+  weekTitle.textContent = week.title;
+  weekStartDate.textContent = "Starts on: " + week.startDate;
+  weekDescription.textContent = week.description;
+
+  weekLinksList.innerHTML = "";
+  week.links.forEach((linkUrl) => {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = linkUrl;
+    a.textContent = linkUrl;
+    li.appendChild(a);
+    weekLinksList.appendChild(li);
+    });
 }
 
 /**
@@ -68,7 +80,20 @@ function renderWeekDetails(week) {
  * (e.g., an <article> containing a <p> and a <footer>).
  */
 function createCommentArticle(comment) {
-  // ... your implementation here ...
+  const article = document.createElement("article");
+  article.className = "comment";
+
+  const p = document.createElement("p");
+  p.textContent = comment.text;
+
+  const footer = document.createElement("footer");
+  const today = new Date().toISOString().split("T")[0];
+  footer.innerHTML = `Posted by: <strong>${comment.author}</strong> on <time datetime="${today}">${today}</time>`;
+
+  article.appendChild(p);
+  article.appendChild(footer);
+
+  return article;
 }
 
 /**
