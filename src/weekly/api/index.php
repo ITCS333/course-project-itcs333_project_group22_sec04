@@ -196,19 +196,36 @@ function sendResponse($statusCode, $payload) {
 function getWeekById($db, $weekId) {
     // TODO: Validate that week_id is provided
     // If not, return error response with 400 status
+    if (!$weekId || trim($weekId) === '') {
+        sendResponse(400, ['success' => false, 'error' => 'Missing or invalid week_id']);
+         return;
+    }
     
     // TODO: Prepare SQL query to select week by week_id
     // SELECT week_id, title, start_date, description, links, created_at FROM weeks WHERE week_id = ?
+    $query = "SELECT week_id, title, start_date, description, links, created_at FROM weeks WHERE week_id = ?";
     
     // TODO: Bind the week_id parameter
+    try {
+        $stmt = $db->prepare($query);
+        $stmt->execute([$weekId]);  
     
     // TODO: Execute the query
-    
+     $week = $stmt->fetch();
     // TODO: Fetch the result
     
     // TODO: Check if week exists
     // If yes, decode the links JSON and return success response with week data
     // If no, return error response with 404 status
+    if ($week) {
+        $week['links'] = json_decode($week['links'], true) ?? [];
+        sendResponse(200, ['success' => true, 'data' => $week]);
+         } else {
+            sendResponse(404, ['success' => false, 'error' => 'Week not found']);
+         }
+         } catch (PDOException $e) {
+            sendResponse(500, ['success' => false, 'error' => 'Failed to retrieve week']);
+         }
 }
 
 
