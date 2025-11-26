@@ -519,9 +519,14 @@ function deleteWeek($db, $weekId) {
 function getCommentsByWeek($db, $weekId) {
     // TODO: Validate that week_id is provided
     // If not, return error response with 400 status
+    if (!$weekId || trim($weekId) === '') {
+        sendResponse(400, ['success' => false, 'error' => 'Missing or invalid week_id']);
+        return;
+    }
     
     // TODO: Prepare SQL query to select comments for the week
     // SELECT id, week_id, author, text, created_at FROM comments WHERE week_id = ? ORDER BY created_at ASC
+    $query = "SELECT id, week_id, author, text, created_at FROM comments WHERE week_id = ? ORDER BY created_at ASC";
     
     // TODO: Bind the week_id parameter
     
@@ -531,6 +536,19 @@ function getCommentsByWeek($db, $weekId) {
     
     // TODO: Return JSON response with success status and data
     // Even if no comments exist, return an empty array
+    try {
+        // Prepare and execute the query
+        $stmt = $db->prepare($query);
+        $stmt->execute([$weekId]);
+
+        // Fetch all results as an associative array
+        $comments = $stmt->fetchAll();
+
+        // Return JSON response with success status and data
+        sendResponse(200, ['success' => true, 'data' => $comments]);
+    } catch (PDOException $e) {
+        sendResponse(500, ['success' => false, 'error' => 'Failed to retrieve comments']);
+    }
 }
 
 
@@ -548,19 +566,45 @@ function createComment($db, $data) {
     // TODO: Validate required fields
     // Check if week_id, author, and text are provided
     // If any field is missing, return error response with 400 status
+    $required = ['week_id', 'author', 'text'];
+    foreach ($required as $field) {
+        if (!isset($data[$field]) || trim($data[$field]) === '') {
+            sendResponse(400, ['success' => false, 'error' => "Missing or invalid field: $field"]);
+            return;
+        }
+    }
     
     // TODO: Sanitize input data
     // Trim whitespace from all fields
+    $weekId = trim($data['week_id']);
+    $author = trim($data['author']);
+    $text   = trim($data['text']);
     
     // TODO: Validate that text is not empty after trimming
     // If empty, return error response with 400 status
+    if ($text === '') {
+        sendResponse(400, ['success' => false, 'error' => 'Comment text cannot be empty']);
+        return;
+    }
     
     // TODO: Check if the week exists
     // Prepare and execute a SELECT query on weeks table
     // If week not found, return error response with 404 status
+     try {
+        $checkStmt = $db->prepare("SELECT id FROM weeks WHERE week_id = ?");
+        $checkStmt->execute([$weekId]);
+        if (!$checkStmt->fetch()) {
+            sendResponse(404, ['success' => false, 'error' => 'Week not found']);
+            return;
+        }
+    } catch (PDOException $e) {
+        sendResponse(500, ['success' => false, 'error' => 'Database error during week lookup']);
+        return;
+    }
     
     // TODO: Prepare INSERT query
     // INSERT INTO comments (week_id, author, text) VALUES (?, ?, ?)
+     $insertQuery = "INSERT INTO comments (week_id, author, text) VALUES (?, ?, ?)";
     
     // TODO: Bind parameters
     
@@ -570,6 +614,20 @@ function createComment($db, $data) {
     // If yes, get the last insert ID and return success response with 201 status
     // Include the new comment data in the response
     // If no, return error response with 500 status
+    try {
+        $stmt = $db->prepare($insertQuery);
+        $stmt->execute([$weekId, $author, $text]);
+
+        // Get the last inserted comment
+        $commentId = $db->lastInsertId();
+        $getStmt = $db->prepare("SELECT id, week_id, author, text, created_at FROM comments WHERE id = ?");
+        $getStmt->execute([$commentId]);
+        $newComment = $getStmt->fetch();
+
+        sendResponse(201, ['success' => true, 'data' => $newComment]);
+    } catch (PDOException $e) {
+        sendResponse(500, ['success' => false, 'error' => 'Failed to create comment']);
+    }
 }
 
 
