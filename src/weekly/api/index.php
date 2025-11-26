@@ -127,67 +127,61 @@ $resource = isset($_GET['resource']) ? strtolower(trim($_GET['resource'])) : 'we
  * 
  * Query Parameters:
  *   - search: Optional search term to filter by title or description
- *   - sort: Optional field to sort by (title, start_date)
+ *   - sort: Optional field to sort by (title, start_date, created_at)
  *   - order: Optional sort order (asc or desc, default: asc)
  */
 function getAllWeeks($db) {
-    // TODO: Initialize variables for search, sort, and order from query parameters
+    // Initialize variables
     $search = isset($_GET['search']) ? trim($_GET['search']) : '';
-    $sort = isset($_GET['sort']) ? strtolower($_GET['sort']) : 'start_date';
-    $order = isset($_GET['order']) ? strtolower($_GET['order']) : 'asc';
-    // TODO: Start building the SQL query
-    // Base query: SELECT week_id, title, start_date, description, links, created_at FROM weeks
+    $sort   = isset($_GET['sort']) ? strtolower($_GET['sort']) : 'start_date';
+    $order  = isset($_GET['order']) ? strtolower($_GET['order']) : 'asc';
+
+    // Validate sort and order
     $allowedSortFields = ['title', 'start_date', 'created_at'];
     if (!in_array($sort, $allowedSortFields)) {
         $sort = 'start_date';
     }
     $order = ($order === 'desc') ? 'DESC' : 'ASC';
+
+    // Build query
     $query = "SELECT week_id, title, start_date, description, links, created_at FROM weeks";
-     $params = [];
-    // TODO: Check if search parameter exists
-    // If yes, add WHERE clause using LIKE for title and description
-    // Example: WHERE title LIKE ? OR description LIKE ?
-      if ($search !== '') {
+    $params = [];
+
+    if ($search !== '') {
         $query .= " WHERE title LIKE ? OR description LIKE ?";
         $searchTerm = '%' . $search . '%';
         $params[] = $searchTerm;
         $params[] = $searchTerm;
     }
+
     $query .= " ORDER BY $sort $order";
-    // TODO: Check if sort parameter exists
-    // Validate sort field to prevent SQL injection (only allow: title, start_date, created_at)
-    // If invalid, use default sort field (start_date)
-    
-    // TODO: Check if order parameter exists
-    // Validate order to prevent SQL injection (only allow: asc, desc)
-    // If invalid, use default order (asc)
+
     try {
+        // Prepare and execute
         $stmt = $db->prepare($query);
         $stmt->execute($params);
+
+        // Fetch results
         $weeks = $stmt->fetchAll();
-        echo json_encode($weeks);
+
+        // Decode links JSON
+        foreach ($weeks as &$week) {
+            $week['links'] = json_decode($week['links'], true) ?? [];
+        }
+
+        // Return response
+        sendResponse(200, ['success' => true, 'data' => $weeks]);
     } catch (PDOException $e) {
-        http_response_code(500);
-        echo json_encode(['error' => 'Failed to retrieve weeks']);
+        sendResponse(500, ['success' => false, 'error' => 'Failed to retrieve weeks']);
     }
 }
-    
-    // TODO: Add ORDER BY clause to the query
-    
-    // TODO: Prepare the SQL query using PDO
-    
-    // TODO: Bind parameters if using search
-    // Use wildcards for LIKE: "%{$searchTerm}%"
-    
-    // TODO: Execute the query
-    
-    // TODO: Fetch all results as an associative array
-    
-    // TODO: Process each week's links field
-    // Decode the JSON string back to an array using json_decode()
-    
-    // TODO: Return JSON response with success status and data
-    // Use sendResponse() helper function
+
+/**
+ * Helper: Send JSON response
+ */
+function sendResponse($statusCode, $payload) {
+    http_response_code($statusCode);
+    echo json_encode($payload);
 }
 
 
