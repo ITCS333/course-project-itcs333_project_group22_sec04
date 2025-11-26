@@ -245,32 +245,78 @@ function createWeek($db, $data) {
     // TODO: Validate required fields
     // Check if week_id, title, start_date, and description are provided
     // If any field is missing, return error response with 400 status
+    $required = ['week_id', 'title', 'start_date', 'description'];
+    foreach ($required as $field) {
+        if (!isset($data[$field]) || trim($data[$field]) === '') {
+            sendResponse(400, ['success' => false, 'error' => "Missing or invalid field: $field"]);
+            return;
+        }
+    }
     
     // TODO: Sanitize input data
     // Trim whitespace from title, description, and week_id
+    $weekId     = trim($data['week_id']);
+    $title      = trim($data['title']);
+    $startDate  = trim($data['start_date']);
+    $description= trim($data['description']);
+
     
     // TODO: Validate start_date format
     // Use a regex or DateTime::createFromFormat() to verify YYYY-MM-DD format
     // If invalid, return error response with 400 status
+         $dateObj = DateTime::createFromFormat('Y-m-d', $startDate);
+    if (!$dateObj || $dateObj->format('Y-m-d') !== $startDate) {
+        sendResponse(400, ['success' => false, 'error' => 'Invalid start_date format. Use YYYY-MM-DD']);
+        return;
+    }
     
     // TODO: Check if week_id already exists
     // Prepare and execute a SELECT query to check for duplicates
     // If duplicate found, return error response with 409 status (Conflict)
-    
+    try {
+        $checkQuery = "SELECT id FROM weeks WHERE week_id = ?";
+        $checkStmt = $db->prepare($checkQuery);
+        $checkStmt->execute([$weekId]);
+        if ($checkStmt->fetch()) {
+            sendResponse(409, ['success' => false, 'error' => 'Week ID already exists']);
+            return;
+        }
+    } catch (PDOException $e) {
+        sendResponse(500, ['success' => false, 'error' => 'Database error during duplicate check']);
+        return;
+    }
     // TODO: Handle links array
     // If links is provided and is an array, encode it to JSON using json_encode()
     // If links is not provided, use an empty array []
+    $links = isset($data['links']) && is_array($data['links']) ? json_encode($data['links']) : json_encode([]);
     
     // TODO: Prepare INSERT query
     // INSERT INTO weeks (week_id, title, start_date, description, links) VALUES (?, ?, ?, ?, ?)
+     $insertQuery = "INSERT INTO weeks (week_id, title, start_date, description, links) VALUES (?, ?, ?, ?, ?)";
     
     // TODO: Bind parameters
     
     // TODO: Execute the query
+    try {
+        $insertStmt = $db->prepare($insertQuery);
+        $insertStmt->execute([$weekId, $title, $startDate, $description, $links]);
+
+        // Return success response
+        $newWeek = [
+            'week_id'    => $weekId,
+            'title'      => $title,
+            'start_date' => $startDate,
+            'description'=> $description,
+            'links'      => json_decode($links, true),
+        ];
     
     // TODO: Check if insert was successful
     // If yes, return success response with 201 status (Created) and the new week data
     // If no, return error response with 500 status
+    sendResponse(201, ['success' => true, 'data' => $newWeek]);
+    } catch (PDOException $e) {
+        sendResponse(500, ['success' => false, 'error' => 'Failed to create week']);
+    }
 }
 
 
@@ -289,28 +335,79 @@ function createWeek($db, $data) {
 function updateWeek($db, $data) {
     // TODO: Validate that week_id is provided
     // If not, return error response with 400 status
+    if (!isset($data['week_id']) || trim($data['week_id']) === '') {
+        sendResponse(400, ['success' => false, 'error' => 'Missing or invalid week_id']);
+        return;
+    }
+
+    $weekId = trim($data['week_id']);
     
     // TODO: Check if week exists
     // Prepare and execute a SELECT query to find the week
     // If not found, return error response with 404 status
+    try {
+        $checkStmt = $db->prepare("SELECT id FROM weeks WHERE week_id = ?");
+        $checkStmt->execute([$weekId]);
+        if (!$checkStmt->fetch()) {
+            sendResponse(404, ['success' => false, 'error' => 'Week not found']);
+            return;
+        }
+    } catch (PDOException $e) {
+        sendResponse(500, ['success' => false, 'error' => 'Database error during lookup']);
+        return;
+    }
     
     // TODO: Build UPDATE query dynamically based on provided fields
     // Initialize an array to hold SET clauses
     // Initialize an array to hold values for binding
+    $setClauses = [];
+    $values = [];
+
+    
     
     // TODO: Check which fields are provided and add to SET clauses
     // If title is provided, add "title = ?"
+    if (isset($data['title'])) {
+        $setClauses[] = "title = ?";
+        $values[] = trim($data['title']);
+    }
     // If start_date is provided, validate format and add "start_date = ?"
+    if (isset($data['start_date'])) {
+        $startDate = trim($data['start_date']);
+        $dateObj = DateTime::createFromFormat('Y-m-d', $startDate);
+        if (!$dateObj || $dateObj->format('Y-m-d') !== $startDate) {
+            sendResponse(400, ['success' => false, 'error' => 'Invalid start_date format. Use YYYY-MM-DD']);
+            return;
+        }
+        $setClauses[] = "start_date = ?";
+        $values[] = $startDate;
+    }
     // If description is provided, add "description = ?"
+     if (isset($data['description'])) {
+        $setClauses[] = "description = ?";
+        $values[] = trim($data['description']);
+    }
     // If links is provided, encode to JSON and add "links = ?"
+    if (isset($data['links'])) {
+        $encodedLinks = is_array($data['links']) ? json_encode($data['links']) : json_encode([]);
+        $setClauses[] = "links = ?";
+        $values[] = $encodedLinks;
+    }
     
     // TODO: If no fields to update, return error response with 400 status
+    if (empty($setClauses)) {
+        sendResponse(400, ['success' => false, 'error' => 'No fields provided for update']);
+        return;
+    }
     
     // TODO: Add updated_at timestamp to SET clauses
     // Add "updated_at = CURRENT_TIMESTAMP"
+    $setClauses[] = "updated_at = CURRENT_TIMESTAMP";
     
     // TODO: Build the complete UPDATE query
     // UPDATE weeks SET [clauses] WHERE week_id = ?
+    $query = "UPDATE weeks SET " . implode(', ', $setClauses) . " WHERE week_id = ?";
+    $values[] = $weekId;
     
     // TODO: Prepare the query
     
@@ -322,6 +419,24 @@ function updateWeek($db, $data) {
     // TODO: Check if update was successful
     // If yes, return success response with updated week data
     // If no, return error response with 500 status
+    try {
+        $stmt = $db->prepare($query);
+        $stmt->execute($values);
+
+        // Return updated data
+        $getStmt = $db->prepare("SELECT week_id, title, start_date, description, links, created_at, updated_at FROM weeks WHERE week_id = ?");
+        $getStmt->execute([$weekId]);
+        $updatedWeek = $getStmt->fetch();
+
+        if ($updatedWeek) {
+            $updatedWeek['links'] = json_decode($updatedWeek['links'], true) ?? [];
+            sendResponse(200, ['success' => true, 'data' => $updatedWeek]);
+        } else {
+            sendResponse(500, ['success' => false, 'error' => 'Failed to retrieve updated week']);
+        }
+    } catch (PDOException $e) {
+        sendResponse(500, ['success' => false, 'error' => 'Failed to update week']);
+    }
 }
 
 
