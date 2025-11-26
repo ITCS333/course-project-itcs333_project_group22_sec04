@@ -451,19 +451,40 @@ function updateWeek($db, $data) {
 function deleteWeek($db, $weekId) {
     // TODO: Validate that week_id is provided
     // If not, return error response with 400 status
+    if (!$weekId || trim($weekId) === '') {
+        sendResponse(400, ['success' => false, 'error' => 'Missing or invalid week_id']);
+        return;
+    }
     
     // TODO: Check if week exists
     // Prepare and execute a SELECT query
     // If not found, return error response with 404 status
+    try {
+         $checkStmt = $db->prepare("SELECT id FROM weeks WHERE week_id = ?");
+        $checkStmt->execute([$weekId]);
+        if (!$checkStmt->fetch()) {
+            sendResponse(404, ['success' => false, 'error' => 'Week not found']);
+            return;
+        }
+    } catch (PDOException $e) {
+        sendResponse(500, ['success' => false, 'error' => 'Database error during lookup']);
+        return;
+    }
     
     // TODO: Delete associated comments first (to maintain referential integrity)
     // Prepare DELETE query for comments table
     // DELETE FROM comments WHERE week_id = ?
+    try {
+        $deleteCommentsStmt = $db->prepare("DELETE FROM comments WHERE week_id = ?");
+        $deleteCommentsStmt->execute([$weekId]);
+
     
     // TODO: Execute comment deletion query
-    
+
     // TODO: Prepare DELETE query for week
     // DELETE FROM weeks WHERE week_id = ?
+    $deleteWeekStmt = $db->prepare("DELETE FROM weeks WHERE week_id = ?");
+        $deleteWeekStmt->execute([$weekId]);
     
     // TODO: Bind the week_id parameter
     
@@ -472,6 +493,14 @@ function deleteWeek($db, $weekId) {
     // TODO: Check if delete was successful
     // If yes, return success response with message indicating week and comments deleted
     // If no, return error response with 500 status
+    if ($deleteWeekStmt->rowCount() > 0) {
+            sendResponse(200, ['success' => true, 'message' => 'Week and associated comments deleted']);
+        } else {
+            sendResponse(500, ['success' => false, 'error' => 'Failed to delete week']);
+        }
+    } catch (PDOException $e) {
+        sendResponse(500, ['success' => false, 'error' => 'Database error during deletion']);
+    }
 }
 
 
