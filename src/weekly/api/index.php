@@ -44,21 +44,64 @@
 // Allow cross-origin requests (CORS) if needed
 // Allow specific HTTP methods (GET, POST, PUT, DELETE, OPTIONS)
 // Allow specific headers (Content-Type, Authorization)
+header('Content-Type: application/json; charset=utf-8');
+
+$allowedMethods = 'GET, POST, PUT, DELETE, OPTIONS';
+$allowedHeaders = 'Content-Type, Authorization';
+
+// Optional: restrict origins using a whitelist
+$allowedOrigins = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'https://yourdomain.com'
+];
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '*';
+
+if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowedOrigins, true)) {
+    header('Access-Control-Allow-Credentials: true');
+    }
+
+    // Methods and headers allowed in CORS requests
+    header('Access-Control-Allow-Methods: ' . $allowedMethods);
+    header('Access-Control-Allow-Headers: ' . $allowedHeaders);
+    header('Access-Control-Max-Age: 86400'); 
+
+    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+        http_response_code(204);
+        exit;
+    }
+    echo json_encode(['status' => 'ok']);
 
 
 // TODO: Handle preflight OPTIONS request
 // If the request method is OPTIONS, return 200 status and exit
-
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
 
 // TODO: Include the database connection class
 // Assume the Database class has a method getConnection() that returns a PDO instance
 // Example: require_once '../config/Database.php';
+require_once '../config/Database.php';
 
+$database = new Database();
+$db = $database->getConnection();
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// HTTP method
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
 // TODO: Get the PDO database connection
 // Example: $database = new Database();
 //          $db = $database->getConnection();
-
+$rawBody = file_get_contents('php://input');
+$bodyData = [];
+if ($rawBody !== false && $rawBody !== '') {
+    $decoded = json_decode($rawBody, true);
+    if (is_array($decoded)) {
+        $bodyData = $decoded;
+    }
+}
 
 // TODO: Get the HTTP request method
 // Use $_SERVER['REQUEST_METHOD']
