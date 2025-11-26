@@ -642,13 +642,29 @@ function createComment($db, $data) {
 function deleteComment($db, $commentId) {
     // TODO: Validate that id is provided
     // If not, return error response with 400 status
+    if (!$commentId || !is_numeric($commentId)) {
+        sendResponse(400, ['success' => false, 'error' => 'Missing or invalid comment ID']);
+        return;
+    }
     
     // TODO: Check if comment exists
     // Prepare and execute a SELECT query
     // If not found, return error response with 404 status
+     try {
+        $checkStmt = $db->prepare("SELECT id FROM comments WHERE id = ?");
+        $checkStmt->execute([$commentId]);
+        if (!$checkStmt->fetch()) {
+            sendResponse(404, ['success' => false, 'error' => 'Comment not found']);
+            return;
+        }
+    } catch (PDOException $e) {
+        sendResponse(500, ['success' => false, 'error' => 'Database error during lookup']);
+        return;
+    }
     
     // TODO: Prepare DELETE query
     // DELETE FROM comments WHERE id = ?
+
     
     // TODO: Bind the id parameter
     
@@ -657,6 +673,18 @@ function deleteComment($db, $commentId) {
     // TODO: Check if delete was successful
     // If yes, return success response
     // If no, return error response with 500 status
+    try {
+        $deleteStmt = $db->prepare("DELETE FROM comments WHERE id = ?");
+        $deleteStmt->execute([$commentId]);
+
+        if ($deleteStmt->rowCount() > 0) {
+            sendResponse(200, ['success' => true, 'message' => 'Comment deleted successfully']);
+        } else {
+            sendResponse(500, ['success' => false, 'error' => 'Failed to delete comment']);
+        }
+    } catch (PDOException $e) {
+        sendResponse(500, ['success' => false, 'error' => 'Database error during deletion']);
+    }
 }
 
 
@@ -668,6 +696,11 @@ try {
     // TODO: Determine the resource type from query parameters
     // Get 'resource' parameter (?resource=weeks or ?resource=comments)
     // If not provided, default to 'weeks'
+    $resource = isset($_GET['resource']) ? strtolower($_GET['resource']) : 'weeks';
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    $requestBody = file_get_contents('php://input');
+    $data = json_decode($requestBody, true);
     
     
     // Route based on resource type and HTTP method
@@ -679,20 +712,32 @@ try {
             // TODO: Check if week_id is provided in query parameters
             // If yes, call getWeekById()
             // If no, call getAllWeeks() to get all weeks (with optional search/sort)
+             $weekId = isset($_GET['week_id']) ? trim($_GET['week_id']) : '';
+            if ($weekId !== '') {
+                getWeekById($db, $weekId);
+            } else {
+                getAllWeeks($db);
+            }
             
         } elseif ($method === 'POST') {
             // TODO: Call createWeek() with the decoded request body
+             createWeek($db, $data);
             
         } elseif ($method === 'PUT') {
             // TODO: Call updateWeek() with the decoded request body
+            updateWeek($db, $data);
             
         } elseif ($method === 'DELETE') {
             // TODO: Get week_id from query parameter or request body
             // Call deleteWeek()
+            $weekId = isset($_GET['week_id']) ? trim($_GET['week_id']) : ($data['week_id'] ?? '');
+            deleteWeek($db, $weekId);
             
         } else {
             // TODO: Return error for unsupported methods
             // Set HTTP status to 405 (Method Not Allowed)
+            http_response_code(405);
+            echo json_encode(['success' => false, 'error' => 'Method Not Allowed']);
         }
     }
     
