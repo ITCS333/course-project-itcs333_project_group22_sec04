@@ -747,17 +747,24 @@ try {
         if ($method === 'GET') {
             // TODO: Get week_id from query parameters
             // Call getCommentsByWeek()
+             $weekId = isset($_GET['week_id']) ? trim($_GET['week_id']) : '';
+        getCommentsByWeek($db, $weekId);
             
         } elseif ($method === 'POST') {
             // TODO: Call createComment() with the decoded request body
+            createComment($db, $data);
             
         } elseif ($method === 'DELETE') {
             // TODO: Get comment id from query parameter or request body
             // Call deleteComment()
+            $commentId = isset($_GET['id']) ? trim($_GET['id']) : ($data['id'] ?? '');
+            deleteComment($db, $commentId);
             
         } else {
             // TODO: Return error for unsupported methods
             // Set HTTP status to 405 (Method Not Allowed)
+            http_response_code(405);
+            echo json_encode(['success' => false, 'error' => 'Method Not Allowed']);
         }
     }
     
@@ -766,22 +773,38 @@ try {
         // TODO: Return error for invalid resource
         // Set HTTP status to 400 (Bad Request)
         // Return JSON error message: "Invalid resource. Use 'weeks' or 'comments'"
+        http_response_code(400);
+    echo json_encode([
+        'success' => false,
+        'error' => "Invalid resource. Use 'weeks' or 'comments'"
+    ]);
     }
     
 } catch (PDOException $e) {
     // TODO: Handle database errors
     // Log the error message (optional, for debugging)
     // error_log($e->getMessage());
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'error' => 'Database error occurred'
+    ]);
+} catch (Exception $e) {
     
     // TODO: Return generic error response with 500 status
     // Do NOT expose database error details to the client
     // Return message: "Database error occurred"
-    
-} catch (Exception $e) {
     // TODO: Handle general errors
     // Log the error message (optional)
     // Return error response with 500 status
-}
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'error' => 'Server error occurred'
+    ]);
+} 
+    
+
 
 
 // ============================================================================
@@ -797,11 +820,14 @@ try {
 function sendResponse($data, $statusCode = 200) {
     // TODO: Set HTTP response code
     // Use http_response_code($statusCode)
+    http_response_code($statusCode);
     
     // TODO: Echo JSON encoded data
     // Use json_encode($data)
+    echo json_encode($data);
     
     // TODO: Exit to prevent further execution
+    exit;
 }
 
 
