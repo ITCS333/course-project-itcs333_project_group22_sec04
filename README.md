@@ -2,12 +2,6 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=20915137&assignment_repo_type=AssignmentRepo)
 # ITCS333 Course Page
 
-## Names & StudentID
-## 1) Abdul Rahman Ahmed Saleh (202108385)
-## 2) Ahammed Ismail (202201478)
-## 3) Bilal Mohammad Tofeeq (202200507)
-## 4) Mohamed Ehab Musbah Abbas (202108486)
-
 ## A table indicating which student was responsible for which task.
 | Student Name                    | Student ID  | Assigned Tasks                          |
 |---------------------------------|-------------|------------------------------------------|

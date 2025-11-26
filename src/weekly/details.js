@@ -24,8 +24,13 @@ let currentComments = [];
 
 // --- Element Selections ---
 // TODO: Select all the elements you added IDs for in step 2.
-
-// --- Functions ---
+const weekTitle = document.getElementById("week-title");
+const weekStartDate = document.getElementById("week-start-date");
+const weekDescription = document.getElementById("week-description");
+const weekLinksList = document.getElementById("week-links-list");
+const commentList = document.getElementById("comment-list");
+const commentForm = document.getElementById("comment-form");
+const newCommentText = document.getElementById("new-comment-text");
 
 /**
  * TODO: Implement the getWeekIdFromURL function.
@@ -35,7 +40,10 @@ let currentComments = [];
  * 3. Return the id.
  */
 function getWeekIdFromURL() {
-  // ... your implementation here ...
+  const queryString = window.location.search;
+  const params = new URLSearchParams(queryString);
+  const id = params.get("id");
+  return id;
 }
 
 /**
@@ -50,7 +58,19 @@ function getWeekIdFromURL() {
  * should both be the link URL.
  */
 function renderWeekDetails(week) {
-  // ... your implementation here ...
+  weekTitle.textContent = week.title;
+  weekStartDate.textContent = "Starts on: " + week.startDate;
+  weekDescription.textContent = week.description;
+
+  weekLinksList.innerHTML = "";
+  week.links.forEach((linkUrl) => {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = linkUrl;
+    a.textContent = linkUrl;
+    li.appendChild(a);
+    weekLinksList.appendChild(li);
+    });
 }
 
 /**
@@ -60,7 +80,20 @@ function renderWeekDetails(week) {
  * (e.g., an <article> containing a <p> and a <footer>).
  */
 function createCommentArticle(comment) {
-  // ... your implementation here ...
+  const article = document.createElement("article");
+  article.className = "comment";
+
+  const p = document.createElement("p");
+  p.textContent = comment.text;
+
+  const footer = document.createElement("footer");
+  const today = new Date().toISOString().split("T")[0];
+  footer.innerHTML = `Posted by: <strong>${comment.author}</strong> on <time datetime="${today}">${today}</time>`;
+
+  article.appendChild(p);
+  article.appendChild(footer);
+
+  return article;
 }
 
 /**
@@ -72,8 +105,13 @@ function createCommentArticle(comment) {
  * append the resulting <article> to `commentList`.
  */
 function renderComments() {
-  // ... your implementation here ...
-}
+  commentList.innerHTML = "";
+  // Loop through currentComments
+  currentComments.forEach((comment) => {
+    const article = createCommentArticle(comment);
+    commentList.appendChild(article);
+    });
+  }
 
 /**
  * TODO: Implement the handleAddComment function.
@@ -89,8 +127,20 @@ function renderComments() {
  * 7. Clear the `newCommentText` textarea.
  */
 function handleAddComment(event) {
-  // ... your implementation here ...
-}
+  event.preventDefault(); // Step 1
+
+  const commentText = newCommentText.value.trim(); // Step 2
+  if (commentText === "") return; // Step 3
+
+  const newComment = {
+    author: "Student", // Step 4
+    text: commentText,
+    };
+     currentComments.push(newComment); // Step 5
+     renderComments(); // Step 6
+     newCommentText.value = ""; // Step 7
+  }
+
 
 /**
  * TODO: Implement an `initializePage` function.
@@ -110,7 +160,42 @@ function handleAddComment(event) {
  * 8. If the week is not found, display an error in `weekTitle`.
  */
 async function initializePage() {
-  // ... your implementation here ...
+  currentWeekId = getWeekIdFromURL();
+
+  if (!currentWeekId) {
+    weekTitle.textContent = "Week not found.";
+    return;
+  }
+  try {
+    // Step 3
+     const [weeksRes, commentsRes] = await Promise.all([
+      fetch("weeks.json"),
+      fetch("week-comments.json"),
+      ]);
+
+      // Step 4
+      const weeksData = await weeksRes.json();
+       const commentsData = await commentsRes.json();
+
+       // Step 5
+       const week = weeksData.find((w) => w.id === currentWeekId);
+
+       // Step 6
+        currentComments = commentsData[currentWeekId] || [];
+
+        // Step 7
+        if (week) {
+          renderWeekDetails(week);
+          renderComments();
+          commentForm.addEventListener("submit", handleAddComment);
+          } else {
+            // Step 8
+            weekTitle.textContent = "Week not found.";
+             }
+             } catch (error) {
+              weekTitle.textContent = "Error loading week data.";
+              console.error("Initialization error:", error);
+  }
 }
 
 // --- Initial Page Load ---

@@ -13,8 +13,32 @@
 
 // --- Element Selections ---
 // TODO: Select the section for the week list ('#week-list-section').
+const weekListSection = document.getElementById('week-list-section');
 
 // --- Functions ---
+function createWeekArticle({ title, startDate, description, link }) {
+  const article = document.createElement('article');
+
+  const heading = document.createElement('h2');
+  heading.textContent = title;
+
+  const date = document.createElement('p');
+  date.innerHTML = `<strong>Starts on:</strong> ${startDate}`;
+
+  const desc = document.createElement('p');
+  desc.textContent = description;
+
+  const anchor = document.createElement('a');
+  anchor.href = link;
+  anchor.textContent = 'View Details & Discussion';
+
+  article.appendChild(heading);
+  article.appendChild(date);
+  article.appendChild(desc);
+  article.appendChild(anchor);
+
+  return article;
+}
 
 /**
  * TODO: Implement the createWeekArticle function.
@@ -24,7 +48,28 @@
  * (This is how the detail page will know which week to load).
  */
 function createWeekArticle(week) {
-  // ... your implementation here ...
+  const article = document.createElement('article');
+
+  const heading = document.createElement('h2');
+  heading.textContent = week.title;
+
+  const date = document.createElement('p');
+  date.innerHTML = `<strong>Starts on:</strong> ${week.startDate}`;
+
+  const description = document.createElement('p');
+  description.textContent = week.description;
+
+  const link = document.createElement('a');
+  link.href = `details.html?id=${week.id}`;
+  link.textContent = 'View Details & Discussion';
+
+  article.appendChild(heading);
+  article.appendChild(date);
+  article.appendChild(description);
+  article.appendChild(link);
+
+  return article;
+
 }
 
 /**
@@ -39,7 +84,19 @@ function createWeekArticle(week) {
  * - Append the returned <article> element to `listSection`.
  */
 async function loadWeeks() {
-  // ... your implementation here ...
+  try {
+  const response = await fetch('weeks.json');
+  const weeks = await response.json();
+
+  listSection.innerHTML = '';
+
+  weeks.forEach(week => {
+    const article = createWeekArticle(week);
+    listSection.appendChild(article);
+  });
+  } catch (error) {
+    console.error('Failed to load weeks:', error);
+  }
 }
 
 // --- Initial Page Load ---
