@@ -840,8 +840,13 @@ function sendResponse($data, $statusCode = 200) {
 function sendError($message, $statusCode = 400) {
     // TODO: Create error response array
     // Structure: ['success' => false, 'error' => $message]
+    $error = [
+        'success' => false,
+        'error' => $message
+    ];
     
     // TODO: Call sendResponse() with the error array and status code
+    sendResponse($error, $statusCode);
 }
 
 
@@ -856,6 +861,8 @@ function validateDate($date) {
     // Format: 'Y-m-d'
     // Check that the created date matches the input string
     // Return true if valid, false otherwise
+    $d = DateTime::createFromFormat('Y-m-d', $date);
+    return $d && $d->format('Y-m-d') === $date;
 }
 
 
@@ -867,12 +874,16 @@ function validateDate($date) {
  */
 function sanitizeInput($data) {
     // TODO: Trim whitespace
+    $data = trim($data);
     
     // TODO: Strip HTML tags using strip_tags()
+    $data = strip_tags($data);
     
     // TODO: Convert special characters using htmlspecialchars()
+    $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
     
     // TODO: Return sanitized data
+    return $data;
 }
 
 
@@ -887,6 +898,7 @@ function isValidSortField($field, $allowedFields) {
     // TODO: Check if $field exists in $allowedFields array
     // Use in_array()
     // Return true if valid, false otherwise
+    return in_array($field, $allowedFields, true);
 }
 
 ?>
