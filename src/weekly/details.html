@@ -207,9 +207,14 @@
             <!-- TODO: Add a sub-heading ('h2') "Description & Notes". -->
             <!-- TODO: Add a paragraph ('p') with dummy text for the week's detailed notes. -->
 <article>
-<p><strong>Starts on:</strong> <time datetime="2025-09-02">2025-09-02</time></p>
+<p id="week-start-date">
+          <strong>Starts on:</strong>
+          <time datetime="2025-10-27">2025-10-27</time>
+        </p>
 <h2>Description &amp; Notes</h2>
-<p>Learn the basics of HTML structure, semantic elements, and essential tags like headings, paragraphs, and links. Focus on correct nesting and proper closing of tags to build clean, functional web pages.</p>
+<p id="week-description">
+          This is placeholder text that will be replaced by JavaScript.
+        </p>
 
             <!-- TODO: Add another sub-heading ('h2') "Exercises & Resources". -->
             <!-- TODO: Use an unordered list ('ul') to display the links for the week. -->
@@ -224,7 +229,7 @@
          <li><a href="file:///C:/Users/osama/Desktop/MyFirstHTML.html">Video: Setting up Your First HTML File</a></li>
          </ul>
          </article>
-
+         </section>
         <!-- Section 2: Discussion Forum -->
         <!-- TODO: Create a 'section' for the discussion, with an 'id' of "discussion-forum". -->
             <!-- TODO: Add a sub-heading ('h2') "Discussion". -->
@@ -234,31 +239,17 @@
             <!-- TODO: Add a container (like a 'div') for the list of comments. -->
                 <!-- TODO: Add 1-2 dummy comments to show the structure. -->
                  <h3>Existing Comments</h3>
-                 <div id="comments-list">
-                 <article class="comment">
-                <!-- Example Comment 1: -->
-                <!-- TODO: Use an 'article' for each comment. -->
-                    <!-- TODO: Use a 'p' for the comment text (e.g., "I have a question about the 'header' tag."). -->
-                    <p>I have a question about the <code>head</code> element.</p>
-                    <!-- TODO: Use a 'footer' to show the author (e.g., "Posted by: John Doe"). -->
-                     <footer>Posted by: <strong>John Doe (Student)</strong> on 2025-09-03</footer>
-                <!-- End of comment article. -->
-                     </article>
-            <!-- Subsection 2.2: Add a Comment Form -->
-             <article class="comment teacher-reply">
-                <p>The order is generally not critical, but placing the `<meta charset>` tag first is highly recommended. It ensures the browser reads the encoding correctly before processing other content.</p>
-                <footer>Posted by:<strong>Jane Smith (Instructor)</strong> on 2025-09-04</footer>
-                </article>
-                </div>
+                 <div id="comments-list"></div>
+                 
             <!-- TODO: Create a 'form' for users to post new comments. Action can be '#'. -->
                 <!-- TODO: Use a 'fieldset' to group the controls. -->
                     <!-- TODO: Add a 'legend', e.g., "Ask a Question". -->
-              <form id="new-comment-form" action="#" method="post">
+              <form id="comment-form" action="#" method="post">
                 <fieldset>
                     <legend>Ask a Question</legend>
                     <div>
-                        <label for="new-comment">Your Comment or Question:</label>
-                        <textarea id="new-comment" name="comment-text" rows="4" required></textarea>
+                        <label for="new-comment-text">Your Comment or Question:</label>
+                        <textarea id="new-comment-text" name="comment-text" rows="4" required></textarea>
                     </div>
                     <div>
                         <button type="submit">Post Comment</button>
@@ -271,6 +262,7 @@
               </section>
     <!-- End of main. -->
             </main>
+             <script src="details.js" defer></script>
 </body>
 </html>
 
