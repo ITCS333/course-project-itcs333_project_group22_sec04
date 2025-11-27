@@ -14,8 +14,184 @@
     <!-- TODO: Add a title, for now use "Week Details". -->
      <title>Week Details</title>
 
-    <!-- TODO: Link to your CSS framework or stylesheet. -->
-     <link rel="stylesheet" href="styles.css">
+       <!-- TODO: Link to your CSS framework or stylesheet. -->
+     <style>
+    /* Reset & base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      background-color: #0088a9;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    /* Main content layout */
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    section {
+      margin-bottom: 2rem;
+    }
+
+    /* Weekly information card */
+    #weekly-information article {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: box-shadow 0.3s ease;
+    }
+
+    #weekly-information article:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    #weekly-information h2 {
+      color: #0088a9;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    #weekly-information ul {
+      list-style-type: disc;
+      padding-left: 1.5rem;
+    }
+
+    #weekly-information a {
+      color: #0088a9;
+      text-decoration: none;
+    }
+
+    #weekly-information a:hover {
+      text-decoration: underline;
+    }
+
+    /* Discussion forum */
+    #discussion-forum {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 1.5rem;
+    }
+
+    #discussion-forum h2 {
+      color: #0088a9;
+      margin-bottom: 1rem;
+    }
+
+    #comments-list {
+      margin-bottom: 1.5rem;
+    }
+
+    .comment {
+      border-bottom: 1px solid #eee;
+      padding: 1rem 0;
+    }
+
+    .comment:last-child {
+      border-bottom: none;
+    }
+
+    .comment p {
+      margin-bottom: 0.5rem;
+    }
+
+    .comment footer {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .teacher-reply {
+      background-color: #f0f8ff;
+      border-left: 4px solid #0088a9;
+      padding-left: 1rem;
+    }
+
+    /* Form styling */
+    form {
+      margin-top: 1rem;
+    }
+
+    fieldset {
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 1rem;
+    }
+
+    legend {
+      font-weight: bold;
+      color: #0088a9;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 0.5rem;
+      background-color: #0088a9;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #006680;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+
+      #weekly-information article,
+      #discussion-forum {
+        padding: 1rem;
+      }
+
+      legend {
+        font-size: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
     <!-- TODO: Create a 'header' with a main heading ('h1'). Use a dummy title like "Week 1: Introduction to HTML". -->
