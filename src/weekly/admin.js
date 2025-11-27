@@ -18,10 +18,16 @@ let weeks = [];
 // --- Element Selections ---
 // TODO: Select the week form ('#week-form').
 const weekForm = document.getElementById("week-form");
-
 // TODO: Select the weeks table body ('#weeks-tbody').
 const weeksTableBody = document.getElementById("weeks-tbody");
 
+
+// Cache form inputs
+const titleInput = document.getElementById("week-title");
+const dateInput = document.getElementById("week-start-date");
+const descInput = document.getElementById("week-description");
+const linksInput = document.getElementById("week-links");
+const submitButton = document.getElementById("add-week"); 
 // --- Functions ---
 
 /**
