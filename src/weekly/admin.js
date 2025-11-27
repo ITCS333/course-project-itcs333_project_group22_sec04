@@ -37,15 +37,16 @@ const weeksTableBody = document.getElementById("weeks-tbody");
 function createWeekRow(week) {
   const tr = document.createElement("tr");
 
-  // Create title cell
+ 
+  // Title cell
   const titleTd = document.createElement("td");
   titleTd.textContent = week.title;
 
-  // Create description cell
+  // Description cell
   const descTd = document.createElement("td");
   descTd.textContent = week.description;
 
-  // Create actions cell
+  // Actions cell
   const actionsTd = document.createElement("td");
 
   const editBtn = document.createElement("button");
@@ -56,16 +57,16 @@ function createWeekRow(week) {
   const deleteBtn = document.createElement("button");
   deleteBtn.textContent = "Delete";
   deleteBtn.classList.add("delete-btn");
-   deleteBtn.setAttribute("data-id", week.id);
+  deleteBtn.setAttribute("data-id", week.id);
 
-    actionsTd.appendChild(editBtn);
-    actionsTd.appendChild(deleteBtn);
+  actionsTd.appendChild(editBtn);
+  actionsTd.appendChild(deleteBtn);
 
-    tr.appendChild(titleTd);
-    tr.appendChild(descTd);
-    tr.appendChild(actionsTd);
-    
-    return tr;
+  tr.appendChild(titleTd);
+  tr.appendChild(descTd);
+  tr.appendChild(actionsTd);
+
+  return tr;
 }
 
 /**
@@ -77,12 +78,14 @@ function createWeekRow(week) {
  * append the resulting <tr> to `weeksTableBody`.
  */
 function renderTable() {
+  // Clear current rows
   weeksTableBody.innerHTML = "";
 
-  weeks.forEach(week => {
+  // Add rows for each week
+  weeks.forEach((week) => {
     const row = createWeekRow(week);
     weeksTableBody.appendChild(row);
-    });
+  });
 }
 
 /**
@@ -99,33 +102,31 @@ function renderTable() {
  * 7. Reset the form.
  */
 function handleAddWeek(event) {
-  // 1. Prevent the form's default submission
   event.preventDefault();
 
-   // 2. Get values from inputs
-   const title = document.getElementById("week-title").value.trim();
-   const startDate = document.getElementById("week-start-date").value.trim();
-   const description = document.getElementById("week-description").value.trim();
+  const title = document.getElementById("week-title").value.trim();
+  const startDate = document.getElementById("week-start-date").value.trim();
+  const description = document.getElementById("week-description").value.trim();
 
-   // 3. Get links and split by newlines
-   const linksRaw = document.getElementById("week-links").value.trim();
-   const links = linksRaw ? linksRaw.split("\n").map(link => link.trim()).filter(link => link) : [];
+  const linksRaw = document.getElementById("week-links").value.trim();
+  const links = linksRaw
+    ? linksRaw
+        .split("\n")
+        .map((link) => link.trim())
+        .filter((link) => link)
+    : [];
 
-   // 4. Create new week object with unique ID
-   const newWeek = {
-     id: `week_${Date.now()}`,
-     title,
-     startDate,
-     description,
-     links
-   };
-   // 5. Add to global weeks array
+  const newWeek = {
+    id: `week_${Date.now()}`,
+    title,
+    startDate,
+    description,
+    links,
+  };
+
   weeks.push(newWeek);
-
-   renderTable();
-
-   event.target.reset();
-
+  renderTable();
+  event.target.reset();
 }
 
 /**
@@ -141,10 +142,11 @@ function handleAddWeek(event) {
 function handleTableClick(event) {
   if (event.target.classList.contains("delete-btn")) {
     const idToDelete = event.target.getAttribute("data-id");
-    //Filter out the matching week from the global weeks array
-    weeks = weeks.filter(week => week.id !== idToDelete);
+    weeks = weeks.filter((week) => week.id !== idToDelete);
     renderTable();
   }
+
+  // You could later extend this for "edit-btn" as well.
 }
 
 /**
@@ -159,26 +161,28 @@ function handleTableClick(event) {
  */
 async function loadAndInitialize() {
   try {
-    //  Fetch data from 'weeks.json'
     const response = await fetch("weeks.json");
-    // Parse the JSON and store in global weeks array
     const data = await response.json();
     weeks = data;
 
-    // Render the table with initial data
+    // Initial render
     renderTable();
 
+    // Event listeners
     weekForm.addEventListener("submit", handleAddWeek);
-    //  Add click event listener to the table body
     weeksTableBody.addEventListener("click", handleTableClick);
   } catch (error) {
     console.error("Failed to load weeks.json:", error);
+
+    // Even if fetch fails, still wire up listeners so the form works
+    weekForm.addEventListener("submit", handleAddWeek);
+    weeksTableBody.addEventListener("click", handleTableClick);
   }
 }
 
 // --- Initial Page Load ---
 // Call the main async function to start the application.
 loadAndInitialize();
-  
+
 
 
