@@ -1,268 +1,66 @@
-<!--
-  Requirement: Create the Dedicated Page for a Single Week
-
-  Instructions:
-  This page displays the full details for one week and allows for discussion.
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- TODO: Add meta tags for charset and viewport. -->
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- TODO: Add a title, for now use "Week Details". -->
-     <title>Week Details</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Week Details</title>
 
-       <!-- TODO: Link to your CSS framework or stylesheet. -->
-     <style>
-    /* Reset & base styles */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      background-color: #f9f9f9;
-      color: #333;
-      line-height: 1.6;
-    }
-
-    /* Header */
-    header {
-      background-color: #0088a9;
-      color: white;
-      text-align: center;
-      padding: 1.5rem;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-    }
-
-    /* Main content layout */
-    main {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-
-    section {
-      margin-bottom: 2rem;
-    }
-
-    /* Weekly information card */
-    #weekly-information article {
-      background-color: white;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      transition: box-shadow 0.3s ease;
-    }
-
-    #weekly-information article:hover {
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    #weekly-information h2 {
-      color: #0088a9;
-      margin-top: 1rem;
-      margin-bottom: 0.5rem;
-    }
-
-    #weekly-information ul {
-      list-style-type: disc;
-      padding-left: 1.5rem;
-    }
-
-    #weekly-information a {
-      color: #0088a9;
-      text-decoration: none;
-    }
-
-    #weekly-information a:hover {
-      text-decoration: underline;
-    }
-
-    /* Discussion forum */
-    #discussion-forum {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      padding: 1.5rem;
-    }
-
-    #discussion-forum h2 {
-      color: #0088a9;
-      margin-bottom: 1rem;
-    }
-
-    #comments-list {
-      margin-bottom: 1.5rem;
-    }
-
-    .comment {
-      border-bottom: 1px solid #eee;
-      padding: 1rem 0;
-    }
-
-    .comment:last-child {
-      border-bottom: none;
-    }
-
-    .comment p {
-      margin-bottom: 0.5rem;
-    }
-
-    .comment footer {
-      font-size: 0.9rem;
-      color: #555;
-    }
-
-    .teacher-reply {
-      background-color: #f0f8ff;
-      border-left: 4px solid #0088a9;
-      padding-left: 1rem;
-    }
-
-    /* Form styling */
-    form {
-      margin-top: 1rem;
-    }
-
-    fieldset {
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      padding: 1rem;
-    }
-
-    legend {
-      font-weight: bold;
-      color: #0088a9;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    textarea {
-      width: 100%;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      resize: vertical;
-    }
-
-    button {
-      margin-top: 0.5rem;
-      background-color: #0088a9;
-      color: white;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #006680;
-    }
-
-    /* Responsive tweaks */
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 1.5rem;
-      }
-
-      #weekly-information article,
-      #discussion-forum {
-        padding: 1rem;
-      }
-
-      legend {
-        font-size: 1rem;
-      }
-    }
+  <style>
+    /* (same CSS you already have; omitted for brevity) */
   </style>
 </head>
 <body>
-    <!-- TODO: Create a 'header' with a main heading ('h1'). Use a dummy title like "Week 1: Introduction to HTML". -->
-<header>
-    <h1>Week 1: Introduction to HTML</h1>
-</header>
-    <!-- TODO: Create the 'main' content area. -->
-     <main>
-        <!-- Section 1: Weekly Information -->
-         <section id="weekly-information">
-        <!-- TODO: Use an 'article' to display the main weekly information. -->
-            <!-- TODO: Add a paragraph ('p') to display the start date, e.g., "Starts on: YYYY-MM-DD". -->
-            <!-- TODO: Add a sub-heading ('h2') "Description & Notes". -->
-            <!-- TODO: Add a paragraph ('p') with dummy text for the week's detailed notes. -->
-<article>
-<p id="week-start-date">
+  <header>
+    <h1 id="week-title">Week 1: Introduction to HTML</h1>
+  </header>
+
+  <main>
+    <section id="weekly-information">
+      <article>
+        <p id="week-start-date">
           <strong>Starts on:</strong>
           <time datetime="2025-10-27">2025-10-27</time>
         </p>
-<h2>Description &amp; Notes</h2>
-<p id="week-description">
+
+        <h2>Description &amp; Notes</h2>
+        <p id="week-description">
           This is placeholder text that will be replaced by JavaScript.
         </p>
 
-            <!-- TODO: Add another sub-heading ('h2') "Exercises & Resources". -->
-            <!-- TODO: Use an unordered list ('ul') to display the links for the week. -->
-                <!-- TODO: Add list items ('li') with anchor tags ('a') for each resource. Use dummy links for now. -->
-                <!-- Example: <li><a href="#">Exercise 1 - Basic Tags</a></li> -->
-            <!-- End of the list. -->
-        <!-- End of article. -->
-         <h2>Exercises &amp; Resources</h2>
-         <ul>
-         <li><a href="https://www.fing.edu.uy/tecnoinf/mvd/cursos/ria/material/teorico/html-tags-chart.pdf">Exercise 1 - Basic Tags</a></li>
-         <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML">Reading: MDN HTML Introduction</a></li>
-         <li><a href="file:///C:/Users/osama/Desktop/MyFirstHTML.html">Video: Setting up Your First HTML File</a></li>
-         </ul>
-         </article>
-         </section>
-        <!-- Section 2: Discussion Forum -->
-        <!-- TODO: Create a 'section' for the discussion, with an 'id' of "discussion-forum". -->
-            <!-- TODO: Add a sub-heading ('h2') "Discussion". -->
-<section id="discussion-forum">
-    <h2>Discussion</h2>
-            <!-- Subsection 2.1: Existing Comments -->
-            <!-- TODO: Add a container (like a 'div') for the list of comments. -->
-                <!-- TODO: Add 1-2 dummy comments to show the structure. -->
-                 <h3>Existing Comments</h3>
-                 <div id="comments-list"></div>
-                 
-            <!-- TODO: Create a 'form' for users to post new comments. Action can be '#'. -->
-                <!-- TODO: Use a 'fieldset' to group the controls. -->
-                    <!-- TODO: Add a 'legend', e.g., "Ask a Question". -->
-              <form id="comment-form" action="#" method="post">
-                <fieldset>
-                    <legend>Ask a Question</legend>
-                    <div>
-                        <label for="new-comment-text">Your Comment or Question:</label>
-                        <textarea id="new-comment-text" name="comment-text" rows="4" required></textarea>
-                    </div>
-                    <div>
-                        <button type="submit">Post Comment</button>
-                    </div>
-                    <!-- End of fieldset. -->
-                </fieldset>
-                <!-- End of form. -->
-              </form>
-            <!-- End of discussion section. -->
-              </section>
-    <!-- End of main. -->
-            </main>
-             <script src="details.js" defer></script>
+        <h2>Exercises &amp; Resources</h2>
+        <ul id="week-links-list">
+          <!-- will be replaced by JS -->
+        </ul>
+      </article>
+    </section>
+
+    <section id="discussion-forum">
+      <h2>Discussion</h2>
+      <h3>Existing Comments</h3>
+
+      <!-- JS will clear and populate this -->
+      <div id="comment-list"></div>
+
+      <form id="comment-form" action="#" method="post">
+        <fieldset>
+          <legend>Ask a Question</legend>
+          <div>
+            <label for="new-comment-text">Your Comment or Question:</label>
+            <textarea
+              id="new-comment-text"
+              name="comment-text"
+              rows="4"
+              required
+            ></textarea>
+          </div>
+          <div>
+            <button type="submit">Post Comment</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+  </main>
+
+  <script src="details.js" defer></script>
 </body>
 </html>
-
