@@ -16,6 +16,98 @@
  <title>Weekly Course Breakdown</title>
     <!-- TODO: Link to your CSS framework or stylesheet. -->
      <link rel="stylesheet" href="styles.css">
+<style>
+    /* Reset & base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      background-color: #0088a9;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    /* Weekly list section */
+    #weekly-list {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    /* Each week article */
+    article {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: box-shadow 0.3s ease;
+    }
+
+    article:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    article h2 {
+      color: #0088a9;
+      margin-bottom: 0.5rem;
+    }
+
+    article p {
+      margin: 0.5rem 0;
+    }
+
+    /* Links */
+    article a {
+      display: inline-block;
+      margin-top: 1rem;
+      background-color: #0088a9;
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    article a:hover {
+      background-color: #006680;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+
+      article {
+        padding: 1rem;
+      }
+
+      article h2 {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
