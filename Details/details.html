@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Week Details</title>
+
+  <style>
+    /* Reset & base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      background-color: #0088a9;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    /* Main content */
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    section {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: box-shadow 0.3s ease;
+    }
+
+    section:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #0088a9;
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      margin: 0.5rem 0;
+    }
+
+    ul {
+      list-style: disc;
+      padding-left: 1.5rem;
+    }
+
+    ul li {
+      margin: 0.5rem 0;
+    }
+
+    ul li a {
+      color: #0088a9;
+      text-decoration: none;
+    }
+
+    ul li a:hover {
+      text-decoration: underline;
+    }
+
+    /* Discussion forum */
+    #discussion-forum h3 {
+      margin-top: 1rem;
+      color: #555;
+    }
+
+    #comment-list {
+      margin-top: 1rem;
+      padding: 1rem;
+      background-color: #f1f1f1;
+      border-radius: 4px;
+    }
+
+    form {
+      margin-top: 1rem;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 0.75rem;
+      background-color: #0088a9;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #006680;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+
+      section {
+        padding: 1rem;
+      }
+
+      h2 {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="week-title">Week 1: Introduction to HTML</h1>
+  </header>
+
+  <main>
+    <section id="weekly-information">
+      <article>
+        <p id="week-start-date">
+          <strong>Starts on:</strong>
+          <time datetime="2025-10-27">2025-10-27</time>
+        </p>
+
+        <h2>Description &amp; Notes</h2>
+        <p id="week-description">
+          This is placeholder text that will be replaced by JavaScript.
+        </p>
+
+        <h2>Exercises &amp; Resources</h2>
+        <ul id="week-links-list">
+          <li><a href="#">Exercise 1: Basic Tags</a></li>
+          <li><a href="#">Resource: MDN HTML Guide</a></li>
+        </ul>
+      </article>
+    </section>
+
+    <section id="discussion-forum">
+      <h2>Discussion</h2>
+      <h3>Existing Comments</h3>
+      <div id="comment-list"></div>
+
+      <form id="comment-form" action="#" method="post">
+        <fieldset>
+          <legend>Ask a Question</legend>
+          <div>
+            <label for="new-comment-text">Your Comment or Question:</label>
+            <textarea id="new-comment-text" name="comment-text" rows="4" required></textarea>
+          </div>
+          <div>
+            <button type="submit">Post Comment</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+  </main>
+
+  <script src="details.js" defer></script>
+</body>
+</html>
