@@ -18,7 +18,159 @@
      <title>Manage Weekly Breakdown</title>
 
     <!-- TODO: Link to your CSS framework or stylesheet. -->
-     <link rel="stylesheet" href="style.css">
+    <!-- Styles -->
+  <style>
+    /* Reset & base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      background-color: #0088a9;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    /* Main content layout */
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    section {
+      margin-bottom: 2rem;
+    }
+
+    /* Form styling */
+    form {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 1.5rem;
+    }
+
+    fieldset {
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 1rem;
+    }
+
+    legend {
+      font-weight: bold;
+      color: #0088a9;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      background-color: #0088a9;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #006680;
+    }
+
+    /* Table styling */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    th,
+    td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background-color: #0088a9;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    /* Action buttons */
+    .edit-btn {
+      background-color: #3498db;
+      margin-right: 0.5rem;
+    }
+
+    .edit-btn:hover {
+      background-color: #217dbb;
+    }
+
+    .delete-btn {
+      background-color: #e74c3c;
+    }
+
+    .delete-btn:hover {
+      background-color: #c0392b;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+
+      th,
+      td {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+      }
+
+      button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -31,55 +183,57 @@
     <section>
         <h2>➕Add a New Week</h2>
 <form id="week-form" action="#" method="post">
-            <fieldset>
-                <legend>Weekly Details</legend>
-                    <div>
-                    <label for="week-title">Week Title</label>
-                    <input 
-                        id="week-title" 
-                        name="week-title" 
-                        type="text" 
-                        required 
-                        placeholder="Week 1: Introduction to HTML"
-                    >
-                </div>
+        <fieldset>
+          <legend>Weekly Details</legend>
+
+          <div>
+            <label for="week-title">Week Title</label>
+            <input
+              id="week-title"
+              name="week-title"
+              type="text"
+              required
+              placeholder="Week 1: Introduction to HTML"
+            >
+          </div>
 
                 <div>
-                    <label for="week-start-date">Start Date</label>
-                    <input 
-                        id="week-start-date" 
-                        name="week-start-date" 
-                        type="date" 
-                        required
-                    >
-                </div>
+            <label for="week-start-date">Start Date</label>
+            <input
+              id="week-start-date"
+              name="week-start-date"
+              type="date"
+              required
+            >
+          </div>
+
                 
                 <div>
-                    <label for="week-description">Description &amp; Notes</label>
-                    <textarea 
-                        id="week-description" 
-                        name="week-description" 
-                        rows="5"
-                    ></textarea>
-                </div>
+            <label for="week-description">Description &amp; Notes</label>
+            <textarea
+              id="week-description"
+              name="week-description"
+              rows="5"
+            ></textarea>
+          </div>
 
                 <div>
-                    <label for="week-links">Exercises / Resources Links</label>
-                    <textarea 
-                        id="week-links" 
-                        name="week-links" 
-                        rows="3"
-                    ></textarea>
-                </div>
+            <label for="week-links">Exercises / Resources Links</label>
+            <textarea
+              id="week-links"
+              name="week-links"
+              rows="3"
+            ></textarea>
+          </div>
 
                 <div>
-                    <button id="add-week" type="submit">Add Week</button>
-                </div>
+            <button id="add-week" type="submit">Add Week</button>
+          </div>
 
             </fieldset>
         </form>
     </section>
-</main>
+
 
 
         <!-- Section 2: Existing Weekly Entries -->
@@ -91,40 +245,36 @@
                 <!-- TODO: Create a 'thead' and a 'tr' inside it. -->
                     <!-- TODO: Add 'th' elements for "Week Title", "Description", and "Actions". -->
 <table id="weeks-table">
-<thead>
-<tr>
- <th scope="col">Week Title</th>
- <th scope="col">Description</th>
- <th scope="col">Actions</th>
-</tr>
-</thead>
+        <thead>
+          <tr>
+            <th scope="col">Week Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
                 <!-- TODO: Create a 'tbody' for the data. -->
-                 <tbody>
+                 <tbody id="weeks-tbody">
                     <!-- TODO: Add 1-2 rows of dummy data to see the structure. -->
                     <!-- Example Row 1: -->
                     <!-- TODO: Create a 'tr' for the first week. -->
                         <!-- TODO: Add 'td' cells for a title (e.g., "Week 1: Intro to HTML") and a short description. -->
-                      <tr>
-                <td>Week 1: Intro to HTML</td>
-                <td>Covers basic HTML structure, essential tags (h1-h6, p, a, img), and attributes.</td>
-                <td>
-                        <!-- TODO: Add a 'td' containing the action buttons. -->
-                            <!-- TODO: Add an "Edit" button. -->
-                             <button class="edit-btn" data-week-id="1">Edit</button>
-                            <!-- TODO: Add a "Delete" button. -->
-                             <button class="delete-btn" data-week-id="1">Delete</button>
-                        <!-- End of actions 'td'. -->
-                         </td>
-                    <!-- End of the row. -->
-                     </tr>
+                     <tr>
+            <td>Week 1: Intro to HTML</td>
+            <td>Covers basic HTML structure, essential tags (h1-h6, p, a, img), and attributes.</td>
+            <td>
+              <button class="edit-btn" data-id="1">Edit</button>
+              <button class="delete-btn" data-id="1">Delete</button>
+            </td>
+          </tr>
+          
                     <tr>
                         <td>Week 2: CSS Fundamentals</td>
-                        <td>Deep dive into selectors, properties, the Box Model, and basic layout techniques.</td>
-                        <td>
-                            <button class="edit-btn" data-week-id="2">Edit</button>
-                            <button class="delete-btn" data-week-id="2">Delete</button>
-                        </td>
-                    </tr>
+            <td>Deep dive into selectors, properties, the Box Model, and basic layout techniques.</td>
+            <td>
+              <button class="edit-btn" data-id="2">Edit</button>
+              <button class="delete-btn" data-id="2">Delete</button>
+            </td>
+          </tr>
 
                 <!-- End of tbody. -->
                  </tbody>
@@ -134,6 +284,9 @@
          </section>
 
     <!-- End of main. -->
+        </main>
+<!-- Link JS (same folder) -->
+  <script src="admin.js" defer></script>
 </body>
 </html>
 
