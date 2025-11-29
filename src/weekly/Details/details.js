@@ -15,29 +15,37 @@ const newCommentText = document.getElementById("new-comment-text");
  * Get ?id=... from the URL
  */
 function getWeekIdFromURL() {
-  const queryString = window.location.search;
-  const params = new URLSearchParams(queryString);
-  return params.get("id");
+  const params = new URLSearchParams(window.location.search);
+  return params.get("id") || "week_1"; // default
 }
+
 
 /**
  * Render one week's details
  */
 function renderWeekDetails(week) {
   weekTitle.textContent = week.title;
-  weekStartDate.textContent = "Starts on: " + week.startDate;
+
+  // Preserve <strong> and <time> structure
+  const timeEl = weekStartDate.querySelector("time");
+  timeEl.setAttribute("datetime", week.startDate);
+  timeEl.textContent = week.startDate;
+
   weekDescription.textContent = week.description;
 
   weekLinksList.innerHTML = "";
-  week.links.forEach((linkUrl) => {
+  week.links.forEach((url) => {
     const li = document.createElement("li");
     const a = document.createElement("a");
-    a.href = linkUrl;
-    a.textContent = linkUrl;
+    a.href = url;
+    a.textContent = url;
+    a.rel = "noopener noreferrer";
+    a.target = "_blank";
     li.appendChild(a);
     weekLinksList.appendChild(li);
   });
 }
+
 
 /**
  * Create an <article> element for one comment
@@ -95,35 +103,35 @@ function handleAddComment(event) {
 async function initializePage() {
   currentWeekId = getWeekIdFromURL();
 
-  if (!currentWeekId) {
-    weekTitle.textContent = "Week not found.";
-    return;
-  }
-
   try {
-    // NOTE: filenames must match your actual files: weeks.json & comments.json
     const [weeksRes, commentsRes] = await Promise.all([
       fetch("weeks.json"),
       fetch("comments.json"),
     ]);
 
+    if (!weeksRes.ok || !commentsRes.ok) {
+      throw new Error("Failed to load data files");
+    }
+
     const weeksData = await weeksRes.json();
     const commentsData = await commentsRes.json();
 
     const week = weeksData.find((w) => w.id === currentWeekId);
-    currentComments = commentsData[currentWeekId] || [];
+    currentComments = Array.isArray(commentsData[currentWeekId]) ? commentsData[currentWeekId] : [];
 
-    if (week) {
-      renderWeekDetails(week);
-      renderComments();
-      commentForm.addEventListener("submit", handleAddComment);
-    } else {
+    if (!week) {
       weekTitle.textContent = "Week not found.";
+      return;
     }
+
+    renderWeekDetails(week);
+    renderComments();
+    commentForm.addEventListener("submit", handleAddComment);
   } catch (error) {
     weekTitle.textContent = "Error loading week data.";
     console.error("Initialization error:", error);
   }
 }
+
 
 initializePage();
