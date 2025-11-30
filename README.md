@@ -14,4 +14,4 @@
 
 
 ## A link to your live, hosted application on Replit.
-Bilal Mohammad Repli link: https://replit.com/@bilalmohammadto/ITCS333-Course-Project-2
+Bilal Mohammad Replit link: https://replit.com/@bilalmohammadto/ITCS333-Course-Project-2
