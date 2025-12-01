@@ -17,7 +17,85 @@
       <title>Web Dev Course Homepage</title>
 
     <!-- TODO: Link to your CSS framework or stylesheet. -->
-     <link rel="stylesheet" href="styles.css">
+     <style>
+        /* Reset some defaults for consistency */
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: Arial, sans-serif;
+          line-height: 1.6;
+          background-color: #f9f9f9;
+          color: #333;
+        }
+
+        header {
+          background: #004080;
+          color: #fff;
+          padding: 1.5rem;
+          text-align: center;
+        }
+
+        header h1 {
+          font-size: 2rem;
+        }
+
+        main {
+          max-width: 900px;
+          margin: 2rem auto;
+          padding: 1rem;
+        }
+
+        nav {
+          background: #fff;
+          border: 1px solid #ddd;
+          border-radius: 6px;
+          padding: 1rem;
+        }
+
+        nav h2 {
+          margin-bottom: 1rem;
+          font-size: 1.4rem;
+          color: #004080;
+        }
+
+        nav ul {
+          list-style: none;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 0.75rem;
+        }
+
+        nav li {
+          background: #f0f4f8;
+          border-radius: 4px;
+          transition: background 0.3s ease;
+        }
+
+        nav li:hover {
+          background: #dce7f3;
+        }
+
+        nav a {
+          display: block;
+          padding: 0.75rem;
+          text-decoration: none;
+          color: #004080;
+          font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+          header h1 {
+            font-size: 1.5rem;
+          }
+          nav ul {
+            grid-template-columns: 1fr;
+          }
+        }
+    </style>
 </head>
 <body>
 
@@ -50,7 +128,7 @@
 
                 <!-- TODO: Add a list item ('li') with a link ('a') to the Admin Weekly Breakdown page.
                      - Text: "Admin: Manage Weekly Breakdown" -->
-                     <li><a href="admin-weekly.html">Admin: Manage Weekly Breakdown</a></li>
+                     <li><a href="file:///C:/Users/osama/Desktop/course-project-itcs333_project_group22_sec04/src/weekly/admin.html">Admin: Manage Weekly Breakdown</a></li>
 
                 <!-- TODO: Add a list item ('li') with a link ('a') to the Admin Assignments page.
                      - Text: "Admin: Manage Assignments" -->
@@ -63,7 +141,7 @@
   
                 <!-- TODO: Add a list item ('li') with a link ('a') to the Student Weekly Breakdown page.
                      - Text: "View Weekly Breakdown" -->
-                     <li><a href="student-weekly.html">View Weekly Breakdown</a></li>
+                     <li><a href="file:///C:/Users/osama/Desktop/course-project-itcs333_project_group22_sec04/src/weekly/list.html">View Weekly Breakdown</a></li>
 
                 <!-- TODO: Add a list item ('li') with a link ('a') to the Student Assignments page.
                      - Text: "View Assignments" -->
