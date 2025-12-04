@@ -1,63 +1,158 @@
 <!--
   Requirement: Create the Page for a Single Discussion Topic
-
-  Instructions:
-  This page displays the original post of a topic, all its replies, and a form to add a new reply.
 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- TODO: Add meta tags for charset and viewport. -->
-    
-    <!-- TODO: Add a title, for now use "Topic Details". -->
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- TODO: Link to your CSS framework or stylesheet. -->
+    <!-- Page title -->
+    <title>Topic Details</title>
+
+    <!-- CSS framework (مثال: PicoCSS) -->
+    <link rel="stylesheet"
+          href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+
+    <!-- Simple custom styling -->
+    <style>
+        body {
+            background: #f5f5f5;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+        }
+
+        #original-post {
+            background: #ffffff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            margin-bottom: 2rem;
+        }
+
+        #original-post footer {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-top: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .post-actions,
+        .reply-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        #replies-section article {
+            background: #ffffff;
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+            margin-bottom: 1rem;
+        }
+
+        #replies-section article footer {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
 </head>
 <body>
-    <!-- TODO: Create a 'header' with a main heading ('h1'). Use a dummy title like "Question about CSS Flexbox". -->
+    <!-- Header -->
+    <header class="container">
+        <h1>Question about CSS Flexbox</h1>
+    </header>
 
-    <!-- TODO: Create the 'main' content area. -->
+    <!-- Main content -->
+    <main class="container">
 
         <!-- Section 1: Original Post -->
-        <!-- TODO: Use an 'article' to display the main topic post. Give it an 'id' like "original-post". -->
-            <!-- TODO: Add a paragraph ('p') with the dummy text of the original message. -->
-            <!-- TODO: Use a 'footer' for the metadata: "Posted by: Student Name on YYYY-MM-DD". -->
-            <!-- TODO: Add a container for "Edit" and "Delete" buttons, just like on the main page.
-                 Remember, these actions are restricted to the owner or admin. -->
-        <!-- End of article. -->
+        <article id="original-post">
+            <p>
+                I'm trying to center items inside a flex container, but they keep sticking
+                to the left side. I'm not sure if I should use <code>justify-content</code>
+                or <code>align-items</code>, and how they work together.
+            </p>
+
+            <footer>
+                Posted by: Student Name on 2025-01-10
+            </footer>
+
+            <div class="post-actions">
+                <button type="button">Edit</button>
+                <button type="button">Delete</button>
+            </div>
+        </article>
 
         <!-- Section 2: Replies -->
-        <!-- TODO: Create a 'section' for the replies, with an 'id' of "replies-section". -->
-            <!-- TODO: Add a sub-heading ('h2') "Replies". -->
+        <section id="replies-section">
+            <h2>Replies</h2>
 
-            <!-- TODO: Add a container (like a 'div') for the list of replies. -->
-                <!-- TODO: Add 1-2 dummy replies to show the structure. -->
+            <div id="replies-container">
+                <!-- Reply 1 -->
+                <article>
+                    <p>
+                        Have you tried using <code>justify-content: center;</code> along with
+                        <code>align-items: center;</code>? The first controls the main axis,
+                        and the second controls the cross axis.
+                    </p>
+                    <footer>
+                        Reply by: Ahmed Ali on 2025-01-11
+                    </footer>
+                    <div class="reply-actions">
+                        <button type="button">Edit</button>
+                        <button type="button">Delete</button>
+                    </div>
+                </article>
 
-                <!-- Example Reply 1: -->
-                <!-- TODO: Use an 'article' for each reply. -->
-                    <!-- TODO: Use a 'p' for the reply text (e.g., "Have you tried using 'justify-content: space-between'?"). -->
-                    <!-- TODO: Use a 'footer' to show the author and date. -->
-                    <!-- TODO: Add a container for "Edit" and "Delete" buttons for this specific reply.
-                         These actions are restricted to the reply's author or the admin. -->
-                <!-- End of reply article. -->
+                <!-- Reply 2 -->
+                <article>
+                    <p>
+                        Also make sure the parent container has <code>display: flex;</code>
+                        and a fixed height, otherwise you might not see the vertical centering.
+                    </p>
+                    <footer>
+                        Reply by: Fatima Hussain on 2025-01-12
+                    </footer>
+                    <div class="reply-actions">
+                        <button type="button">Edit</button>
+                        <button type="button">Delete</button>
+                    </div>
+                </article>
+            </div>
+        </section>
 
         <!-- Section 3: Add a Reply Form -->
-        <!-- TODO: Create a 'section' for the reply form. -->
-            <!-- TODO: Add a sub-heading ('h2') "Post a Reply". -->
-            <!-- TODO: Create a 'form' for users to post new replies. Action can be '#'. -->
-                <!-- TODO: Use a 'fieldset' to group the controls. -->
-                    <!-- TODO: Add a 'legend', e.g., "Your Reply". -->
+        <section>
+            <h2>Post a Reply</h2>
 
-                    <!-- TODO: Add a 'label' and 'textarea' for the reply message.
-                         - label 'for': "new-reply"
-                         - textarea 'id': "new-reply", required -->
-                    
-                    <!-- TODO: Add a 'button' to submit the reply.
-                         - type="submit", Text: "Post Reply" -->
-                <!-- End of fieldset. -->
-            <!-- End of form. -->
-        <!-- End of replies section. -->
+            <form action="#" method="post">
+                <fieldset>
+                    <legend>Your Reply</legend>
 
-    <!-- End of main. -->
+                    <label for="new-reply">
+                        Message
+                    </label>
+                    <textarea
+                        id="new-reply"
+                        name="new-reply"
+                        rows="5"
+                        required
+                    ></textarea>
+
+                    <button type="submit">
+                        Post Reply
+                    </button>
+                </fieldset>
+            </form>
+        </section>
+
+    </main>
 </body>
 </html>
