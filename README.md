@@ -17,3 +17,12 @@
 Bilal Mohammad Replit link: https://replit.com/@bilalmohammadto/ITCS333-Course-Project-2
 Mohammed Ehab Replit Link:  https://replit.com/@mohammedehab24/ITCS333-Course-Project?v=1
 
+## Database Setup (for Task 2: Course Resources)
+
+1. Make sure MySQL is running.
+2. Create the database and tables by importing `resources_schema.sql`:
+   - Open phpMyAdmin (e.g., http://localhost/phpmyadmin).
+   - If needed, create a database named `itcs333_db`.
+   - Select `itcs333_db`, go to the **Import** tab, and import `resources_schema.sql`.
+3. The PHP code uses the connection settings from `config.php`
+   (host: `localhost`, user: `root`, empty password by default).

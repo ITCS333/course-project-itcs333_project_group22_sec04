@@ -16,6 +16,7 @@ requireAdmin();
 
     <ul>
         <li><a href="admin_students.php">Manage Students</a></li>
+        <li><a href="admin_resources.php">Manage Resources</a></li>
         <li><a href="admin_change_password.php">Change My Password</a></li>
         <li><a href="index.php">Go to Homepage</a></li>
         <li><a href="logout.php">Logout</a></li>

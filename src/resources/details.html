@@ -1,64 +1,131 @@
-<!--
-  Requirement: Create the Dedicated Page for a Single Resource
-
-  Instructions:
-  This page displays the details for one resource and allows for discussion.
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- TODO: Add meta tags for charset and viewport. -->
-    
-    <!-- TODO: Add a title. You can make it dynamic later, but for now, use "Resource Details". -->
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- TODO: Link to your CSS framework or stylesheet. -->
+    <!-- Page title -->
+    <title>Resource Details</title>
+
+    <!-- CSS framework (مثال: PicoCSS) -->
+    <link rel="stylesheet"
+          href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+
+    <!-- Simple custom styling -->
+    <style>
+        body {
+            background: #f5f5f5;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+        }
+
+        #resource-info {
+            background: #ffffff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            margin-bottom: 2rem;
+        }
+
+        #discussion-forum article {
+            background: #ffffff;
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+            margin-bottom: 1rem;
+        }
+
+        #discussion-forum article footer {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-top: 0.5rem;
+        }
+    </style>
 </head>
 <body>
-    <!-- TODO: Create a 'header' with a main heading ('h1'). You can use a dummy title like "Chapter 1 Notes". -->
+    <!-- Header -->
+    <header class="container">
+        <h1>Chapter 1 Notes</h1>
+    </header>
 
-    <!-- TODO: Create the 'main' content area. -->
+    <!-- Main content -->
+    <main class="container">
 
         <!-- Section 1: Resource Information -->
-        <!-- TODO: Use an 'article' to display the main resource information. -->
-            <!-- TODO: Add a paragraph ('p') for the resource description (use dummy text). -->
-            <!-- TODO: Add an anchor tag ('a') that links to the actual resource URL (use a dummy link like "https://example.com").
-                 - Text should be "Access Resource Material".
-                 - Consider adding 'target="_blank"' to open it in a new tab. -->
-        <!-- End of article. -->
+        <article id="resource-info">
+            <p>
+                These notes cover the main concepts from Chapter 1, including the
+                basic structure of an HTML document, common tags, and how browsers
+                render web pages.
+            </p>
+
+            <p>
+                <a href="https://example.com"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Access Resource Material
+                </a>
+            </p>
+        </article>
 
         <!-- Section 2: Discussion Forum -->
-        <!-- TODO: Create a 'section' for the discussion, with an 'id' of "discussion-forum". -->
-            <!-- TODO: Add a sub-heading ('h2') "Discussion". -->
+        <section id="discussion-forum">
+            <h2>Discussion</h2>
 
-            <!-- Subsection 2.1: Existing Comments -->
-            <!-- TODO: Add a container (like a 'div') for the list of comments. -->
-                <!-- TODO: Add 1-2 dummy comments to show the structure. -->
+            <!-- Existing comments -->
+            <div id="comments-container">
 
-                <!-- Example Comment 1: -->
-                <!-- TODO: Use an 'article' for each comment. -->
-                    <!-- TODO: Use a 'p' for the comment text (e.g., "This was very helpful, thanks!"). -->
-                    <!-- TODO: Use a 'footer' to show the author (e.g., "Posted by: Jane Doe"). -->
-                <!-- End of comment article. -->
+                <!-- Comment 1 -->
+                <article>
+                    <p>
+                        This was very helpful, thanks! The examples for HTML tags
+                        made it much easier to understand the lecture.
+                    </p>
+                    <footer>
+                        Posted by: Jane Doe
+                    </footer>
+                </article>
 
-                <!-- Example Comment 2: -->
-                <!-- TODO: Create another 'article' for a second comment. -->
-            <!-- End of comment list container. -->
+                <!-- Comment 2 -->
+                <article>
+                    <p>
+                        I was a bit confused about the difference between
+                        <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code>,
+                        but these notes cleared it up for me.
+                    </p>
+                    <footer>
+                        Posted by: Ali Hassan
+                    </footer>
+                </article>
 
-            <!-- Subsection 2.2: Add a Comment Form -->
-            <!-- TODO: Create a 'form' for users to post new comments. Action can be '#'. -->
-                <!-- TODO: Use a 'fieldset' to group the controls. -->
-                    <!-- TODO: Add a 'legend', e.g., "Leave a Comment". -->
+            </div>
 
-                    <!-- TODO: Add a 'label' and 'textarea' for the comment box.
-                         - label 'for': "new-comment"
-                         - textarea 'id': "new-comment", required -->
-                    
-                    <!-- TODO: Add a 'button' to submit the comment.
-                         - type="submit", Text: "Post Comment" -->
-                <!-- End of fieldset. -->
-            <!-- End of form. -->
-        <!-- End of discussion section. -->
+            <!-- Add a Comment Form -->
+            <form action="#" method="post">
+                <fieldset>
+                    <legend>Leave a Comment</legend>
 
-    <!-- End of main. -->
+                    <label for="new-comment">
+                        Your Comment
+                    </label>
+                    <textarea
+                        id="new-comment"
+                        name="new-comment"
+                        rows="5"
+                        required
+                    ></textarea>
+
+                    <button type="submit">
+                        Post Comment
+                    </button>
+                </fieldset>
+            </form>
+        </section>
+
+    </main>
 </body>
 </html>
