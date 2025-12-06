@@ -181,7 +181,7 @@ async function loadAndInitialize() {
     resources = [];
   }
 
-  // أول رسم
+  // Initial render
   renderTable();
 
   // Listeners
