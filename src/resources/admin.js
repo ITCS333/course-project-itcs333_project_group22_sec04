@@ -75,6 +75,7 @@ function handleAddResource(event) {
   const titleInput = document.querySelector('#resource-title');
   const descInput = document.querySelector('#resource-description');
   const linkInput = document.querySelector('#resource-link');
+  const addBtn = document.querySelector('#add-resource');
 
   const title = titleInput ? titleInput.value.trim() : '';
   const description = descInput ? descInput.value.trim() : '';
@@ -85,6 +86,28 @@ function handleAddResource(event) {
     return;
   }
 
+  // If we are editing an existing resource
+  if (editingId) {
+    const index = resources.findIndex((res) => res.id === editingId);
+    if (index !== -1) {
+      resources[index] = {
+        ...resources[index],
+        title,
+        description,
+        link
+      };
+    }
+
+    editingId = null;
+    renderTable();
+
+    if (resourceForm) resourceForm.reset();
+    if (addBtn) addBtn.textContent = 'Add Resource';
+
+    return;
+  }
+
+  // Otherwise, add a new resource
   const newResource = {
     id: `res_${Date.now()}`,
     title,
