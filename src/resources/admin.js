@@ -124,7 +124,7 @@ function handleAddResource(event) {
 }
 
 /**
- * Handle clicks inside the table body (delete via delegation).
+ * Handle clicks inside the table body (edit/delete via delegation).
  */
 function handleTableClick(event) {
   const target = event.target;
