@@ -4,6 +4,7 @@
 
 // --- Global Data Store ---
 let resources = [];
+let editingId = null;
 
 // --- Element Selections ---
 const resourceForm = document.querySelector('#resource-form');
