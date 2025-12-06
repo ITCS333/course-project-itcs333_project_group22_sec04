@@ -107,15 +107,37 @@ function handleTableClick(event) {
   const target = event.target;
   if (!(target instanceof HTMLElement)) return;
 
+  // Delete
   if (target.classList.contains('delete-btn')) {
     const id = target.dataset.id;
     if (!id) return;
 
     resources = resources.filter((res) => res.id !== id);
     renderTable();
+    return;
   }
 
-  // (Optional) edit-btn logic ممكن تضيفه لاحقاً لو طلبت منكم الدكتورة
+  // Edit
+  if (target.classList.contains('edit-btn')) {
+    const id = target.dataset.id;
+    if (!id) return;
+
+    const resource = resources.find((res) => res.id === id);
+    if (!resource) return;
+
+    const titleInput = document.querySelector('#resource-title');
+    const descInput = document.querySelector('#resource-description');
+    const linkInput = document.querySelector('#resource-link');
+    const addBtn = document.querySelector('#add-resource');
+
+    if (titleInput) titleInput.value = resource.title;
+    if (descInput) descInput.value = resource.description || '';
+    if (linkInput) linkInput.value = resource.link || '';
+
+    editingId = id; // remember which one we're editing
+
+    if (addBtn) addBtn.textContent = 'Save Changes';
+  }
 }
 
 /**
