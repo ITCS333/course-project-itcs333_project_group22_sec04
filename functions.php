@@ -23,3 +23,10 @@ function requireAdmin() {
         exit;
     }
 }
+function canModify($ownerId) {
+    // Admins can modify anything; owners can modify their own content
+    if (isAdmin()) {
+        return true;
+    }
+    return isset($_SESSION['user_id']) && (int)$_SESSION['user_id'] === (int)$ownerId;
+}
