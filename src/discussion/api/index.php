@@ -1,4 +1,6 @@
 <?php
+session_start();
+$_SESSION['initialized'] = true;
 /**
  * Discussion Board API
  * RESTful API for topics & replies using PDO + JSON.
