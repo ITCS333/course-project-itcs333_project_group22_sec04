@@ -1,5 +1,6 @@
 <?php
 session_start();
+$_SESSION['initialized'] = true;
 /**
  * Student Management API
  * 
