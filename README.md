@@ -15,7 +15,7 @@
 
 ## A link to your live, hosted application on Replit.
 Bilal Mohammad Replit link: https://replit.com/@bilalmohammadto/ITCS333-Course-Project-2
-Mohammed Ehab Replit Link:  https://replit.com/@mohammedehab24/ITCS333-Course-Project?v=1
+Mohammed Ehab Replit Link:  https://replit.com/@mohammedehab24/ITCS333-Course-Project-1?v=1
 Ahammed Ismail Replit Link: https://replit.com/@electrogaming53/ITCS333-Course-Project
 
 ## Database Setup (for Task 2: Course Resources)
